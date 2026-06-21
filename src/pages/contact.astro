@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
+
+const infos = [
+  {
+    icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
+    label: 'Email',
+    value: 'contact@oris.fr',
+    href: 'mailto:contact@oris.fr',
+  },
+  {
+    icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
+    label: 'Localisation',
+    value: 'Normandie, France',
+    sub: 'Interventions sur place et à distance',
+  },
+  {
+    icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+    label: 'Disponibilité',
+    value: 'Lun — Ven, 9h — 18h',
+    sub: 'Réponse sous 24h garantie',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Combien coûte un premier échange ?',
+    a: 'Rien. Le premier appel découverte de 30 minutes est entièrement gratuit et sans engagement. On y identifie ensemble vos premières pistes d\'automatisation.',
+  },
+  {
+    q: 'En combien de temps voit-on des résultats ?',
+    a: 'Dès la première semaine pour les automatisations simples (relances, devis, planning). Les projets plus complexes (CRM, IA) sont généralement opérationnels en 2 à 4 semaines.',
+  },
+  {
+    q: 'Faut-il être à l\'aise avec la technique ?',
+    a: 'Absolument pas. Nos solutions sont conçues pour être prises en main en quelques heures. On forme vos équipes et on fournit une documentation claire.',
+  },
+  {
+    q: 'Intervenez-vous en dehors de la Normandie ?',
+    a: 'Oui. Nous sommes basés en Normandie mais intervenons à distance partout en France, et sur place dans toute la région.',
+  },
+];
+---
+
+<Layout
+  title="Contact"
+  description="Contactez Oris pour un appel découverte gratuit. Automatisation et IA pour PME en Normandie — réponse sous 24h."
+>
+
+  <!-- ── HERO ───────────────────────────────── -->
+  <section class="py-20 sm:py-24 bg-[var(--color-background)] relative overflow-hidden">
+    <!-- Fond animé cohérent avec l'accueil -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute inset-0 opacity-60" style="background-image: radial-gradient(rgba(67,56,202,0.08) 1px, transparent 1px); background-size: 28px 28px;"></div>
+      <div class="mesh-orb absolute -top-20 right-1/4 w-[420px] h-[420px] rounded-full blur-[70px]"
+           style="background: radial-gradient(circle at center, rgba(67,56,202,0.12), transparent 70%)"></div>
+      <div class="mesh-orb-2 absolute bottom-0 left-1/5 w-[320px] h-[320px] rounded-full blur-[60px]"
+           style="background: radial-gradient(circle at center, rgba(6,182,212,0.08), transparent 70%)"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="reveal inline-flex items-center gap-2 bg-[var(--color-cta)]/10 text-[var(--color-cta)] text-xs font-bold rounded-full px-4 py-2 mb-7 tracking-wide">
+        <span class="ping-slow w-2 h-2 rounded-full bg-[var(--color-cta)] flex-shrink-0" aria-hidden="true"></span>
+        Réponse garantie sous 24h
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-5 leading-tight tracking-tight reveal reveal-delay-100">
+        Un projet ? Une question ?<br/><span class="gradient-text">Parlons-en.</span>
+      </h1>
+      <p class="text-base text-[var(--color-text-muted)] max-w-xl mx-auto reveal reveal-delay-200">
+        Remplissez le formulaire ou envoyez-nous un email. On vous recontacte rapidement,
+        sans jargon et sans engagement.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── CONTENU PRINCIPAL ──────────────────── -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-14 items-start">
+
+        <!-- Infos (2/5) -->
+        <div class="lg:col-span-2 space-y-4 reveal-left">
+
+          <h2 class="text-xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-6">
+            Nos coordonnées
+          </h2>
+
+          {infos.map(info => (
+            <div class="flex items-start gap-4 bg-[var(--color-background)] rounded-2xl p-5 border border-[var(--color-border)] card-lift" style="box-shadow: var(--shadow-sm);">
+              <div class="w-10 h-10 rounded-xl bg-[var(--color-cta)]/10 flex items-center justify-center flex-shrink-0 text-[var(--color-cta)]">
+                <Fragment set:html={info.icon} />
+              </div>
+              <div>
+                <p class="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wide mb-0.5">{info.label}</p>
+                {info.href ? (
+                  <a href={info.href} class="text-[var(--color-cta)] font-semibold hover:underline text-sm">{info.value}</a>
+                ) : (
+                  <p class="text-[var(--color-primary)] font-semibold text-sm">{info.value}</p>
+                )}
+                {info.sub && <p class="text-[var(--color-text-muted)] text-xs mt-0.5">{info.sub}</p>}
+              </div>
+            </div>
+          ))}
+
+          <!-- Trust badge -->
+          <div class="bg-[var(--color-cta)]/6 border border-[var(--color-cta)]/20 rounded-2xl p-6 mt-6">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="w-9 h-9 rounded-xl bg-[var(--color-cta)]/15 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-[var(--color-cta)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+              </span>
+              <p class="font-bold text-[var(--color-primary)] text-sm">Appel découverte gratuit</p>
+            </div>
+            <p class="text-[var(--color-text-muted)] text-sm leading-relaxed">
+              30 minutes pour comprendre vos besoins et identifier les premières pistes d'automatisation.
+              Sans engagement.
+            </p>
+          </div>
+        </div>
+
+        <!-- Formulaire (3/5) -->
+        <div class="lg:col-span-3 bg-[var(--color-background)] rounded-2xl p-8 sm:p-10 border border-[var(--color-border)] reveal-right" style="box-shadow: var(--shadow-md);">
+          <h2 class="text-xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-1">
+            Envoyez-nous un message
+          </h2>
+          <p class="text-sm text-[var(--color-text-muted)] mb-6">Les champs marqués d'un <span class="text-[var(--color-cta)]">*</span> sont obligatoires.</p>
+          <ContactForm />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ────────────────────────────────── -->
+  <section class="py-24 bg-[var(--color-background)] relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none opacity-50" aria-hidden="true"
+         style="background-image: radial-gradient(rgba(67,56,202,0.05) 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 reveal">
+        <p class="text-[var(--color-cta)] font-semibold text-xs uppercase tracking-[0.18em] mb-3">Questions fréquentes</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] leading-tight">
+          Vous vous demandez peut-être…
+        </h2>
+      </div>
+
+      <div class="space-y-3">
+        {faqs.map((faq, i) => (
+          <div class={`faq-item bg-white rounded-2xl border border-[var(--color-border)] overflow-hidden reveal reveal-delay-${Math.min((i + 1) * 100, 300)}`} style="box-shadow: var(--shadow-sm);">
+            <button
+              type="button"
+              class="faq-trigger w-full flex items-center justify-between gap-4 text-left px-6 py-5
+                     focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--color-cta)]"
+              aria-expanded="false"
+            >
+              <span class="font-bold font-[family-name:var(--font-heading)] text-[var(--color-primary)] text-sm sm:text-base">{faq.q}</span>
+              <svg class="faq-icon w-5 h-5 text-[var(--color-cta)] flex-shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="faq-panel grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out">
+              <div class="overflow-hidden">
+                <p class="px-6 pb-5 text-sm text-[var(--color-text-muted)] leading-relaxed">{faq.a}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Encart final -->
+      <div class="mt-10 text-center reveal">
+        <p class="text-sm text-[var(--color-text-muted)]">
+          Vous ne trouvez pas votre réponse ?
+          <a href="mailto:contact@oris.fr" class="text-[var(--color-cta)] font-semibold hover:underline">Écrivez-nous directement</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* FAQ accordéon */
+    document.querySelectorAll<HTMLButtonElement>('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item   = trigger.closest('.faq-item');
+        const panel  = item?.querySelector('.faq-panel') as HTMLElement | null;
+        const icon   = trigger.querySelector('.faq-icon');
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+        if (panel) panel.style.gridTemplateRows = isOpen ? '0fr' : '1fr';
+        icon?.classList.toggle('rotate-180', !isOpen);
+      });
+    });
+  </script>
+
+</Layout>

@@ -1,0 +1,135 @@
+---
+import Button from './Button.astro';
+
+const navLinks = [
+  { href: '/',         label: 'Accueil' },
+  { href: '/offres',   label: 'Offres' },
+  { href: '/a-propos', label: 'À propos' },
+  { href: '/contact',  label: 'Contact' },
+];
+
+const current = Astro.url.pathname;
+---
+
+<header
+  id="site-header"
+  class="bg-white/90 backdrop-blur-md border-b border-[var(--color-border)]/60 sticky top-0 z-50 transition-shadow duration-300"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+
+      <!-- Logo -->
+      <a
+        href="/"
+        class="flex items-center gap-1 text-2xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] tracking-tight hover:opacity-80 transition-opacity duration-200"
+        aria-label="Oris — accueil"
+      >
+        Oris<span class="text-[var(--color-cta)]">.</span>
+      </a>
+
+      <!-- Navigation desktop -->
+      <nav class="hidden md:flex items-center gap-8" aria-label="Navigation principale">
+        {navLinks.map(({ href, label }) => {
+          const isActive = href === '/' ? current === '/' : current.startsWith(href);
+          return (
+            <a
+              href={href}
+              class={[
+                'relative text-sm font-semibold transition-colors duration-200 pb-0.5',
+                isActive
+                  ? 'text-[var(--color-cta)]'
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-primary)]',
+              ].join(' ')}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {label}
+              {isActive && (
+                <span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-[var(--color-cta)] rounded-full" />
+              )}
+            </a>
+          );
+        })}
+      </nav>
+
+      <!-- CTA desktop -->
+      <div class="hidden md:flex items-center">
+        <Button href="/contact" variant="primary" size="md">Prendre rendez-vous</Button>
+      </div>
+
+      <!-- Burger mobile -->
+      <button
+        type="button"
+        id="mobile-menu-btn"
+        class="md:hidden p-2 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-background)] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-[var(--color-cta)]"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Ouvrir le menu"
+      >
+        <svg id="burger-icon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-[var(--color-border)]/60 bg-white"
+    role="navigation"
+    aria-label="Navigation mobile"
+  >
+    <div class="px-4 py-4 space-y-1">
+      {navLinks.map(({ href, label }) => {
+        const isActive = href === '/' ? current === '/' : current.startsWith(href);
+        return (
+          <a
+            href={href}
+            class={[
+              'flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200',
+              isActive
+                ? 'bg-[var(--color-cta)]/8 text-[var(--color-cta)]'
+                : 'text-[var(--color-secondary)] hover:bg-[var(--color-background)] hover:text-[var(--color-primary)]',
+            ].join(' ')}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        );
+      })}
+      <div class="pt-3 border-t border-[var(--color-border)]/60">
+        <Button href="/contact" variant="primary" class="w-full">Prendre rendez-vous</Button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn    = document.getElementById('mobile-menu-btn');
+  const menu   = document.getElementById('mobile-menu');
+  const burger = document.getElementById('burger-icon');
+  const close  = document.getElementById('close-icon');
+  const header = document.getElementById('site-header');
+
+  /* Toggle mobile menu */
+  btn?.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    const next = !isOpen;
+    btn.setAttribute('aria-expanded', String(next));
+    menu?.classList.toggle('hidden', !next);
+    burger?.classList.toggle('hidden', next);
+    close?.classList.toggle('hidden', !next);
+  });
+
+  /* Shadow on scroll */
+  const onScroll = () => {
+    if (header) {
+      header.classList.toggle('shadow-md', window.scrollY > 8);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

@@ -1,0 +1,182 @@
+---
+const tabs = [
+  {
+    id: 'artisan',
+    label: 'Artisans',
+    icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.42 15.17l-5.18 3.07A1 1 0 015 17.36V6.64a1 1 0 011.24-.97l5.18 3.07m0 0l5.18-3.07A1 1 0 0118 6.64v10.72a1 1 0 01-1.24.97l-5.18-3.07m0 0V4m0 11.17V20"/></svg>',
+    title: 'Artisans & métiers manuels',
+    desc: "Gestion de planning, devis automatisés, suivi de chantier, relances clients — nous automatisons les tâches qui vous éloignent de votre savoir-faire.",
+    items: [
+      'Génération automatique de devis et factures',
+      'Planning intelligent avec rappels SMS',
+      'Relances clients automatiques',
+    ],
+  },
+  {
+    id: 'liberal',
+    label: 'Professions libérales',
+    icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
+    title: 'Professions libérales',
+    desc: "Avocats, comptables, consultants — sécurisez vos données, automatisez vos process administratifs et concentrez-vous sur vos clients.",
+    items: [
+      'Tri et classement automatique de documents',
+      'Prise de rendez-vous en ligne sécurisée',
+      'Suivi de dossiers avec alertes intelligentes',
+    ],
+  },
+  {
+    id: 'commerce',
+    label: 'Commerces',
+    icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>',
+    title: 'Commerces',
+    desc: "Stocks, commandes, fidélité client — pilotez votre commerce avec des outils simples qui travaillent pour vous, même quand le rideau est baissé.",
+    items: [
+      'Gestion de stock avec alertes de réapprovisionnement',
+      'Programme fidélité automatisé',
+      'Campagnes SMS/email ciblées',
+    ],
+  },
+  {
+    id: 'pme',
+    label: 'PME / TPE',
+    icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>',
+    title: 'PME / TPE',
+    desc: "Structurez votre croissance : CRM, reporting, workflows internes — des outils sur mesure qui s'adaptent à votre rythme, pas l'inverse.",
+    items: [
+      'CRM personnalisé et automatisé',
+      'Tableaux de bord et reporting automatiques',
+      'Interconnexion de vos outils existants',
+    ],
+  },
+];
+---
+
+<section class="py-24 bg-[var(--color-background)]" id="metiers">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header -->
+    <div class="text-center mb-10 reveal">
+      <p class="text-[var(--color-cta)] font-semibold text-xs uppercase tracking-[0.18em] mb-3">Solutions par métier</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-4 leading-tight">
+        Quel est votre métier ?
+      </h2>
+      <p class="text-base text-[var(--color-text-muted)] max-w-xl mx-auto">
+        Sélectionnez votre activité ci-dessous pour découvrir concrètement
+        ce que nous automatisons pour vous.
+      </p>
+    </div>
+
+    <!-- Consigne -->
+    <div class="flex justify-center mb-5 reveal">
+      <span class="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide">
+        <svg class="w-4 h-4 text-[var(--color-cta)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+        </svg>
+        Cliquez sur votre secteur
+      </span>
+    </div>
+
+    <!-- Tab list -->
+    <div
+      class="flex flex-wrap justify-center gap-2 mb-10"
+      role="tablist"
+      aria-label="Sélection de métier"
+    >
+      {tabs.map((tab, i) => (
+        <button
+          role="tab"
+          id={`tab-${tab.id}`}
+          aria-controls={`panel-${tab.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          data-tab={tab.id}
+          class={[
+            'tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-cta)]',
+            i === 0
+              ? 'bg-[var(--color-cta)] text-white shadow-md'
+              : 'bg-white text-[var(--color-secondary)] border border-[var(--color-border)] hover:border-[var(--color-cta)]/40 hover:text-[var(--color-cta)]',
+          ].join(' ')}
+        >
+          <Fragment set:html={tab.icon} />
+          {tab.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Panels -->
+    <div class="max-w-4xl mx-auto">
+      {tabs.map((tab, i) => (
+        <div
+          id={`panel-${tab.id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${tab.id}`}
+          class={['tab-panel', i !== 0 ? 'hidden' : ''].join(' ')}
+        >
+          <div class="bg-white rounded-2xl p-8 sm:p-10 border border-[var(--color-border)]" style="box-shadow: var(--shadow-md);">
+            <div class="flex items-start gap-6">
+              <div class="hidden sm:flex w-16 h-16 rounded-2xl bg-[var(--color-cta)]/10 items-center justify-center flex-shrink-0 text-[var(--color-cta)]">
+                <Fragment set:html={tab.icon.replace('class="w-5 h-5"', 'class="w-8 h-8"')} />
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-3">
+                  {tab.title}
+                </h3>
+                <p class="text-[var(--color-text-muted)] leading-relaxed mb-6 text-sm">
+                  {tab.desc}
+                </p>
+                <ul class="space-y-3">
+                  {tab.items.map(item => (
+                    <li class="flex items-center gap-3 text-[var(--color-secondary)] text-sm">
+                      <span class="w-5 h-5 rounded-full bg-[var(--color-cta)]/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-3 h-3 text-[var(--color-cta)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabBtns  = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const panels   = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      /* Reset all */
+      tabBtns.forEach(t => {
+        t.setAttribute('aria-selected', 'false');
+        t.className = t.className
+          .replace('bg-[var(--color-cta)] text-white shadow-md', '')
+          + ' bg-white text-[var(--color-secondary)] border border-[var(--color-border)]';
+      });
+
+      /* Activate clicked */
+      btn.setAttribute('aria-selected', 'true');
+      btn.className = btn.className
+        .replace('bg-white text-[var(--color-secondary)] border border-[var(--color-border)]', '')
+        + ' bg-[var(--color-cta)] text-white shadow-md';
+
+      /* Show correct panel */
+      panels.forEach(panel => {
+        if (panel.id === `panel-${target}`) {
+          panel.classList.remove('hidden');
+          panel.classList.add('tab-panel-active');
+        } else {
+          panel.classList.add('hidden');
+          panel.classList.remove('tab-panel-active');
+        }
+      });
+    });
+  });
+</script>

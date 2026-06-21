@@ -1,0 +1,56 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+}
+
+const {
+  href,
+  variant  = 'primary',
+  size     = 'md',
+  class: className = '',
+  type = 'button',
+  disabled = false,
+} = Astro.props;
+
+const base = [
+  'inline-flex items-center justify-center gap-2',
+  'font-semibold rounded-xl',
+  'transition-all duration-200',
+  'cursor-pointer select-none',
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-cta)]',
+  'active:scale-[0.97]',
+].join(' ');
+
+const variants = {
+  primary:
+    'bg-[var(--color-cta)] text-white shadow-md hover:bg-[var(--color-cta-hover)] hover:shadow-lg',
+  secondary:
+    'bg-transparent text-[var(--color-primary)] border border-[var(--color-border)] hover:border-[var(--color-cta)] hover:text-[var(--color-cta)] hover:bg-[var(--color-cta)]/5',
+  ghost:
+    'text-[var(--color-cta)] hover:bg-[var(--color-cta)]/8',
+};
+
+const sizes = {
+  sm:  'px-4   py-2    text-sm',
+  md:  'px-5   py-2.5  text-sm',
+  lg:  'px-7   py-3.5  text-base',
+};
+
+const classes = [base, variants[variant], sizes[size], className].join(' ');
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  class={classes}
+  type={!href ? type : undefined}
+  disabled={!href && disabled ? true : undefined}
+  aria-disabled={disabled ? 'true' : undefined}
+>
+  <slot />
+</Tag>

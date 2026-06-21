@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@theme {
+  /* Typography — Sora (heading) + Nunito (body) */
+  --font-heading: 'Sora', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+
+  /* Color system — Indigo premium */
+  --color-primary: #1A1A2E;
+  --color-secondary: #374151;
+  --color-cta: #4338CA;
+  --color-cta-hover: #3730A3;
+  --color-background: #F5F4F0;
+  --color-surface: #FFFFFF;
+  --color-text: #111827;
+  --color-text-muted: #6B7280;
+  --color-border: #E5E7EB;
+  --color-accent: #06B6D4;
+  --color-gold: #F59E0B;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 3px rgba(26,26,46,0.08), 0 1px 2px rgba(26,26,46,0.04);
+  --shadow-md: 0 4px 12px rgba(26,26,46,0.10), 0 2px 6px rgba(26,26,46,0.06);
+  --shadow-lg: 0 12px 32px rgba(26,26,46,0.12), 0 4px 12px rgba(26,26,46,0.07);
+  --shadow-xl: 0 20px 48px rgba(26,26,46,0.16), 0 8px 20px rgba(26,26,46,0.09);
+
+  /* Easing */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
+}
+
+/* ── Base ─────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cta);
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+
+/* ── Scroll reveal animations ─────────────────────────── */
+.reveal,
+.reveal-left,
+.reveal-right,
+.reveal-scale {
+  transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
+}
+
+.reveal        { opacity: 0; transform: translateY(30px); }
+.reveal-left   { opacity: 0; transform: translateX(-30px); }
+.reveal-right  { opacity: 0; transform: translateX(30px); }
+.reveal-scale  { opacity: 0; transform: scale(0.93); }
+
+.reveal.active,
+.reveal-left.active,
+.reveal-right.active,
+.reveal-scale.active {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-delay-100 { transition-delay: 100ms; }
+.reveal-delay-200 { transition-delay: 200ms; }
+.reveal-delay-300 { transition-delay: 300ms; }
+.reveal-delay-400 { transition-delay: 400ms; }
+.reveal-delay-500 { transition-delay: 500ms; }
+
+/* ── Card hover lift ──────────────────────────────────── */
+.card-lift {
+  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-smooth), border-color 0.25s var(--ease-smooth);
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* ── Animated background orbs ─────────────────────────── */
+@keyframes mesh-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(28px, -20px) scale(1.06); }
+  66%       { transform: translate(-18px, 26px) scale(0.97); }
+}
+.mesh-orb   { animation: mesh-float 9s  ease-in-out infinite; }
+.mesh-orb-2 { animation: mesh-float 11s ease-in-out infinite reverse; }
+.mesh-orb-3 { animation: mesh-float 13s ease-in-out infinite 2s; }
+
+/* ── Marquee ──────────────────────────────────────────── */
+@keyframes marquee-ltr {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+/* Défile de gauche à droite — !important pour passer outre le gel global des animations.
+   Un défilement de marque lent et horizontal est sans risque vestibulaire. */
+.marquee-track--ltr { animation: marquee-ltr 38s linear infinite !important; }
+/* Défile de droite à gauche */
+.marquee-track--rtl { animation: marquee-rtl 38s linear infinite !important; }
+
+/* ── Tab panel transition ─────────────────────────────── */
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tab-panel-active {
+  animation: panel-in 0.35s var(--ease-smooth) forwards;
+}
+
+/* ── Badge ping ───────────────────────────────────────── */
+@keyframes ping-slow {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(1.18); opacity: 0.6; }
+}
+.ping-slow { animation: ping-slow 2.2s ease-in-out infinite; }
+
+/* ── Counter initial state ────────────────────────────── */
+.stat-counter { opacity: 0; transform: translateY(16px); transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth); }
+.stat-counter.visible { opacity: 1; transform: none; }
+
+/* ── Gradient text ────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-cta), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Reduced motion ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal, .reveal-left, .reveal-right, .reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .stat-counter { opacity: 1 !important; transform: none !important; }
+}

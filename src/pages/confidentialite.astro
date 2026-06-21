@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+/*
+ * Politique de confidentialité (RGPD).
+ * ⚠️ À adapter avant mise en ligne : nom du responsable de traitement,
+ * outil de formulaire utilisé (Formspree), durées de conservation réelles.
+ */
+const blocks = [
+  {
+    title: '1. Responsable du traitement',
+    body: [
+      'Les données collectées sur ce site sont traitées par Oris, [forme juridique et siège à compléter], établie en Normandie, France.',
+      'Pour toute question relative à vos données : contact@oris.fr.',
+    ],
+  },
+  {
+    title: '2. Données collectées',
+    body: [
+      'Nous collectons uniquement les données que vous nous transmettez volontairement via le formulaire de contact : prénom, nom, adresse email, nom de l\'entreprise (optionnel) et le contenu de votre message.',
+      'Aucune donnée sensible n\'est demandée. Nous n\'utilisons pas de cookies publicitaires ni de traceurs tiers à des fins marketing.',
+    ],
+  },
+  {
+    title: '3. Finalité du traitement',
+    body: [
+      'Vos données sont utilisées exclusivement pour répondre à votre demande, vous recontacter et assurer le suivi de notre échange commercial. Elles ne sont ni vendues, ni cédées à des tiers.',
+    ],
+  },
+  {
+    title: '4. Base légale',
+    body: [
+      'Le traitement repose sur votre consentement (envoi volontaire du formulaire) et sur l\'intérêt légitime d\'Oris à répondre aux demandes de prospects et clients.',
+    ],
+  },
+  {
+    title: '5. Hébergement du formulaire',
+    body: [
+      'Les soumissions du formulaire sont traitées via un service tiers (Formspree). Les données transitent par ce prestataire conformément à sa propre politique de confidentialité. Aucune donnée n\'est stockée durablement sur ce site, qui est statique.',
+    ],
+  },
+  {
+    title: '6. Durée de conservation',
+    body: [
+      'Vos données sont conservées le temps nécessaire au traitement de votre demande, puis archivées ou supprimées dans un délai maximum de [durée à définir — ex. 3 ans] à compter de notre dernier contact.',
+    ],
+  },
+  {
+    title: '7. Vos droits',
+    body: [
+      'Conformément au RGPD, vous disposez d\'un droit d\'accès, de rectification, d\'effacement, de limitation, d\'opposition et de portabilité de vos données.',
+      'Pour exercer ces droits, écrivez-nous à contact@oris.fr. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr).',
+    ],
+  },
+];
+---
+
+<Layout
+  title="Politique de confidentialité"
+  description="Politique de confidentialité et protection des données personnelles (RGPD) du site Oris."
+>
+  <!-- Hero -->
+  <section class="py-20 sm:py-24 bg-[var(--color-background)] relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none opacity-60" aria-hidden="true"
+         style="background-image: radial-gradient(rgba(67,56,202,0.07) 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-[var(--color-cta)] font-semibold text-xs uppercase tracking-[0.18em] mb-3 reveal">Protection des données</p>
+      <h1 class="text-4xl sm:text-5xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] leading-tight tracking-tight reveal reveal-delay-100">
+        Politique de confidentialité
+      </h1>
+      <p class="text-sm text-[var(--color-text-muted)] mt-4 reveal reveal-delay-200">
+        Conforme au Règlement Général sur la Protection des Données (RGPD).
+      </p>
+    </div>
+  </section>
+
+  <!-- Contenu -->
+  <section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      {blocks.map(block => (
+        <div class="reveal">
+          <h2 class="text-lg font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-3">{block.title}</h2>
+          <div class="space-y-3">
+            {block.body.map(p => (
+              <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">{p}</p>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <!-- Renvoi mentions légales -->
+      <div class="reveal bg-[var(--color-cta)]/6 border border-[var(--color-cta)]/20 rounded-2xl p-6">
+        <p class="text-sm text-[var(--color-text-muted)]">
+          Consultez également nos
+          <a href="/mentions-legales" class="text-[var(--color-cta)] font-semibold hover:underline">mentions légales</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

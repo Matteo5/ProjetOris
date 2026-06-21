@@ -1,0 +1,51 @@
+---
+interface Props {
+  title:       string;
+  description: string;
+  icon:        string;
+  href?:       string;
+}
+
+const { title, description, icon, href = '/offres' } = Astro.props;
+---
+
+<a
+  href={href}
+  class="group flex flex-col h-full bg-white rounded-2xl p-8 border border-[var(--color-border)] card-lift relative overflow-hidden"
+  style="box-shadow: var(--shadow-sm);"
+>
+  <!-- Left accent bar -->
+  <div
+    class="absolute left-0 top-6 bottom-6 w-[3px] bg-[var(--color-cta)] rounded-r-full
+           scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"
+    aria-hidden="true"
+  />
+
+  <!-- Icon -->
+  <div
+    class="w-14 h-14 rounded-2xl bg-[var(--color-cta)]/10 flex items-center justify-center mb-6
+           group-hover:bg-[var(--color-cta)]/18 transition-colors duration-300"
+  >
+    <Fragment set:html={icon} />
+  </div>
+
+  <!-- Content -->
+  <h3 class="text-lg font-bold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-3 leading-snug">
+    {title}
+  </h3>
+  <p class="text-[var(--color-text-muted)] leading-relaxed text-sm mb-5 flex-1">
+    {description}
+  </p>
+
+  <!-- Arrow CTA -->
+  <span
+    class="inline-flex items-center gap-1.5 text-[var(--color-cta)] text-sm font-semibold mt-auto
+           opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0
+           transition-all duration-300"
+  >
+    En savoir plus
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    </svg>
+  </span>
+</a>

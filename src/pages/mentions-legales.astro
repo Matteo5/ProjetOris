@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+/*
+ * ⚠️ À COMPLÉTER avant mise en ligne — remplacez les champs entre crochets
+ * par vos informations légales réelles (RCS, SIRET, hébergeur, etc.).
+ */
+const sections = [
+  {
+    title: 'Éditeur du site',
+    rows: [
+      ['Raison sociale', 'Oris'],
+      ['Forme juridique', '[à compléter — ex. SASU, EI, micro-entreprise]'],
+      ['Capital social', '[à compléter, le cas échéant]'],
+      ['Siège social', '[adresse complète], Normandie, France'],
+      ['SIRET', '[numéro SIRET à compléter]'],
+      ['RCS', '[ville et numéro RCS à compléter]'],
+      ['N° TVA intracommunautaire', '[à compléter, le cas échéant]'],
+      ['Directeur de la publication', '[nom du responsable]'],
+      ['Contact', 'contact@oris.fr'],
+    ],
+  },
+  {
+    title: 'Hébergement',
+    rows: [
+      ['Hébergeur', '[nom de l\'hébergeur — ex. Vercel, Netlify, OVH]'],
+      ['Adresse', '[adresse de l\'hébergeur]'],
+      ['Contact', '[site ou téléphone de l\'hébergeur]'],
+    ],
+  },
+];
+---
+
+<Layout
+  title="Mentions légales"
+  description="Mentions légales du site Oris — éditeur, hébergement, propriété intellectuelle et responsabilité."
+>
+  <!-- Hero -->
+  <section class="py-20 sm:py-24 bg-[var(--color-background)] relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none opacity-60" aria-hidden="true"
+         style="background-image: radial-gradient(rgba(67,56,202,0.07) 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-[var(--color-cta)] font-semibold text-xs uppercase tracking-[0.18em] mb-3 reveal">Informations légales</p>
+      <h1 class="text-4xl sm:text-5xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] leading-tight tracking-tight reveal reveal-delay-100">
+        Mentions légales
+      </h1>
+    </div>
+  </section>
+
+  <!-- Contenu -->
+  <section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+      {sections.map(section => (
+        <div class="reveal">
+          <h2 class="text-xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-5">{section.title}</h2>
+          <div class="bg-[var(--color-background)] rounded-2xl border border-[var(--color-border)] overflow-hidden">
+            {section.rows.map(([label, value], i) => (
+              <div class={`flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 px-6 py-4 ${i !== 0 ? 'border-t border-[var(--color-border)]' : ''}`}>
+                <span class="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wide sm:w-56 flex-shrink-0">{label}</span>
+                <span class="text-sm text-[var(--color-secondary)]">{value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <!-- Propriété intellectuelle -->
+      <div class="reveal">
+        <h2 class="text-xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-5">Propriété intellectuelle</h2>
+        <div class="space-y-4 text-sm text-[var(--color-text-muted)] leading-relaxed">
+          <p>
+            L'ensemble des contenus présents sur ce site (textes, graphismes, logo, icônes, mise en page)
+            est la propriété exclusive d'Oris, sauf mention contraire. Toute reproduction, représentation,
+            modification ou exploitation, totale ou partielle, sans autorisation écrite préalable est interdite
+            et constituerait une contrefaçon sanctionnée par le Code de la propriété intellectuelle.
+          </p>
+          <p>
+            Les logos des technologies tierces affichés sur ce site appartiennent à leurs propriétaires respectifs
+            et sont utilisés à des fins purement illustratives.
+          </p>
+        </div>
+      </div>
+
+      <!-- Responsabilité -->
+      <div class="reveal">
+        <h2 class="text-xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-5">Responsabilité</h2>
+        <div class="space-y-4 text-sm text-[var(--color-text-muted)] leading-relaxed">
+          <p>
+            Oris s'efforce de fournir des informations aussi exactes que possible. Toutefois, elle ne saurait
+            être tenue responsable des omissions, inexactitudes ou carences dans la mise à jour, qu'elles soient
+            de son fait ou du fait de tiers partenaires.
+          </p>
+          <p>
+            Des liens hypertextes peuvent renvoyer vers d'autres sites. Oris décline toute responsabilité quant
+            au contenu de ces sites externes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Renvoi confidentialité -->
+      <div class="reveal bg-[var(--color-cta)]/6 border border-[var(--color-cta)]/20 rounded-2xl p-6">
+        <p class="text-sm text-[var(--color-text-muted)]">
+          Pour en savoir plus sur le traitement de vos données personnelles, consultez notre
+          <a href="/confidentialite" class="text-[var(--color-cta)] font-semibold hover:underline">politique de confidentialité</a>.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</Layout>

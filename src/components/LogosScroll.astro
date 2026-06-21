@@ -1,0 +1,66 @@
+---
+/*
+ * Logos des technologies utilisées — SVG locaux (public/logos/*.svg).
+ * Aucune dépendance réseau au runtime.
+ * Pour ajouter un logo : déposer le SVG dans public/logos/ et l'ajouter ici.
+ */
+const logos = [
+  { file: 'n8n.svg',          name: 'n8n' },
+  { file: 'openai.svg',       name: 'OpenAI' },
+  { file: 'zapier.svg',       name: 'Zapier' },
+  { file: 'make.svg',         name: 'Make' },
+  { file: 'slack.svg',        name: 'Slack' },
+  { file: 'notion.svg',       name: 'Notion' },
+  { file: 'airtable.svg',     name: 'Airtable' },
+  { file: 'hubspot.svg',      name: 'HubSpot' },
+  { file: 'googlesheets.svg', name: 'Google Sheets' },
+  { file: 'gmail.svg',        name: 'Gmail' },
+  { file: 'trello.svg',       name: 'Trello' },
+  { file: 'googlegemini.svg', name: 'Gemini' },
+];
+
+/* Chaque demi-piste contient la liste doublée → l'écran est toujours rempli,
+   même sur très grand écran, et la boucle reste invisible. */
+const group = [...logos, ...logos];
+---
+
+<section class="py-16 bg-[var(--color-background)] overflow-hidden" aria-label="Technologies que nous utilisons">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
+    <p class="text-[var(--color-text-muted)] text-xs font-semibold uppercase tracking-[0.18em]">
+      Les technologies que nous maîtrisons
+    </p>
+  </div>
+
+  <div class="relative">
+    <!-- Piste : 2 demi-pistes identiques, translation de -50% = boucle parfaite.
+         animation-delay négatif → démarre déjà en plein milieu du défilement. -->
+    <div class="marquee-track marquee-track--ltr" style="animation-delay: -19s;" aria-hidden="true">
+      <div class="flex items-center gap-14 pr-14">
+        {group.map((logo) => (
+          <img
+            src={`/logos/${logo.file}`}
+            alt={logo.name}
+            width="40"
+            height="40"
+            class="h-8 sm:h-9 w-auto opacity-50 hover:opacity-90 transition-opacity duration-300 select-none flex-shrink-0"
+          />
+        ))}
+      </div>
+      <div class="flex items-center gap-14 pr-14">
+        {group.map((logo) => (
+          <img
+            src={`/logos/${logo.file}`}
+            alt=""
+            width="40"
+            height="40"
+            class="h-8 sm:h-9 w-auto opacity-50 hover:opacity-90 transition-opacity duration-300 select-none flex-shrink-0"
+          />
+        ))}
+      </div>
+    </div>
+
+    <!-- Fondu sur les bords -->
+    <div class="absolute inset-y-0 left-0  w-24 sm:w-40 bg-gradient-to-r from-[var(--color-background)] to-transparent pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-[var(--color-background)] to-transparent pointer-events-none"></div>
+  </div>
+</section>

@@ -1,0 +1,169 @@
+---
+---
+
+<div>
+  <!-- Formulaire -->
+  <form
+    id="contact-form"
+    action="https://formspree.io/f/YOUR_FORM_ID"
+    method="POST"
+    novalidate
+    class="space-y-5"
+  >
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div>
+        <label for="prenom" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
+          Prénom <span class="text-[var(--color-cta)]">*</span>
+        </label>
+        <input
+          type="text" id="prenom" name="prenom" required autocomplete="given-name"
+          placeholder="Jean"
+          class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
+                 text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
+                 focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
+                 transition-all duration-200"
+        />
+      </div>
+      <div>
+        <label for="nom" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
+          Nom <span class="text-[var(--color-cta)]">*</span>
+        </label>
+        <input
+          type="text" id="nom" name="nom" required autocomplete="family-name"
+          placeholder="Martin"
+          class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
+                 text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
+                 focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
+                 transition-all duration-200"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label for="email" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
+        Email <span class="text-[var(--color-cta)]">*</span>
+      </label>
+      <input
+        type="email" id="email" name="email" required autocomplete="email"
+        placeholder="jean.martin@entreprise.fr"
+        class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
+               text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
+               focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
+               transition-all duration-200"
+      />
+    </div>
+
+    <div>
+      <label for="entreprise" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
+        Entreprise <span class="text-[var(--color-text-muted)] normal-case font-normal">(optionnel)</span>
+      </label>
+      <input
+        type="text" id="entreprise" name="entreprise" autocomplete="organization"
+        placeholder="Mon entreprise"
+        class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
+               text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
+               focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
+               transition-all duration-200"
+      />
+    </div>
+
+    <div>
+      <label for="message" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
+        Message <span class="text-[var(--color-cta)]">*</span>
+      </label>
+      <textarea
+        id="message" name="message" rows="5" required
+        placeholder="Décrivez votre projet ou votre besoin..."
+        class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
+               text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
+               focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
+               transition-all duration-200 resize-y min-h-[130px]"
+      ></textarea>
+    </div>
+
+    <!-- Error message -->
+    <div id="form-error" class="hidden rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700" role="alert">
+      Une erreur est survenue. Merci de réessayer ou de nous écrire directement à contact@oris.fr.
+    </div>
+
+    <div class="pt-1">
+      <button
+        id="submit-btn"
+        type="submit"
+        class="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold text-white
+               bg-[var(--color-cta)] hover:bg-[var(--color-cta-hover)] rounded-xl
+               shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.97]
+               focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-cta)]
+               disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        <span id="submit-label">Envoyer le message</span>
+        <svg id="submit-icon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+        <!-- Spinner (hidden by default) -->
+        <svg id="submit-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+
+  <!-- Success state (hidden) -->
+  <div id="form-success" class="hidden text-center py-12 px-6">
+    <div class="w-16 h-16 mx-auto rounded-full bg-green-100 flex items-center justify-center mb-5">
+      <svg class="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <h3 class="text-xl font-bold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-2">
+      Message envoyé !
+    </h3>
+    <p class="text-[var(--color-text-muted)] text-sm max-w-sm mx-auto">
+      Nous vous répondons sous 24 heures ouvrées. À très vite !
+    </p>
+  </div>
+</div>
+
+<script>
+  const form      = document.getElementById('contact-form') as HTMLFormElement | null;
+  const success   = document.getElementById('form-success');
+  const error     = document.getElementById('form-error');
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const submitLabel   = document.getElementById('submit-label');
+  const submitIcon    = document.getElementById('submit-icon');
+  const submitSpinner = document.getElementById('submit-spinner');
+
+  function setLoading(loading: boolean) {
+    if (!submitBtn) return;
+    submitBtn.disabled = loading;
+    submitLabel!.textContent = loading ? 'Envoi en cours…' : 'Envoyer le message';
+    submitIcon!.classList.toggle('hidden', loading);
+    submitSpinner!.classList.toggle('hidden', !loading);
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    error?.classList.add('hidden');
+    setLoading(true);
+
+    try {
+      const res = await fetch(form.action, {
+        method:  'POST',
+        body:    new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        form.classList.add('hidden');
+        success?.classList.remove('hidden');
+      } else {
+        error?.classList.remove('hidden');
+        setLoading(false);
+      }
+    } catch {
+      error?.classList.remove('hidden');
+      setLoading(false);
+    }
+  });
+</script>
