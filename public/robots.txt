@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://projetoris.vercel.app/sitemap-index.xml
+Sitemap: https://projet-oris.vercel.app/sitemap-index.xml

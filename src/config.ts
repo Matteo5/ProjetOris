@@ -5,7 +5,7 @@
 
 // URL de production (sert au sitemap, aux canoniques et aux balises Open Graph).
 // Remplacer par le domaine Vercel réel ou le domaine personnalisé une fois connu.
-export const SITE_URL = 'https://projetoris.vercel.app';
+export const SITE_URL = 'https://projet-oris.vercel.app';
 
 // Lien de prise de rendez-vous Calendly (bouton « appel découverte »).
 // Remplacer par votre vrai lien Calendly.
