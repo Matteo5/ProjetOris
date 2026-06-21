@@ -15,7 +15,8 @@ const {
   class: className = '',
   type = 'button',
   disabled = false,
-} = Astro.props;
+  ...rest
+} = Astro.props as Props & Record<string, unknown>;
 
 const base = [
   'inline-flex items-center justify-center gap-2',
@@ -51,6 +52,7 @@ const Tag = href ? 'a' : 'button';
   type={!href ? type : undefined}
   disabled={!href && disabled ? true : undefined}
   aria-disabled={disabled ? 'true' : undefined}
+  {...rest}
 >
   <slot />
 </Tag>

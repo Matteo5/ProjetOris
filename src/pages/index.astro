@@ -4,6 +4,7 @@ import Button from '../components/Button.astro';
 import ServicesCard from '../components/ServicesCard.astro';
 import MetierTabs from '../components/MetierTabs.astro';
 import LogosScroll from '../components/LogosScroll.astro';
+import { CALENDLY_URL } from '../config';
 
 const services = [
   {
@@ -96,7 +97,7 @@ const stats = [
 
         <!-- CTAs -->
         <div class="reveal reveal-delay-300 flex flex-col sm:flex-row gap-4 justify-center">
-          <Button href="/contact" variant="primary" size="lg">
+          <Button href={CALENDLY_URL} data-calendly target="_blank" rel="noopener" variant="primary" size="lg">
             Réserver un appel découverte
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -221,7 +222,7 @@ const stats = [
         Un appel de 30 minutes suffit pour identifier vos premières pistes d'automatisation.
         Sans engagement, sans jargon.
       </p>
-      <Button href="/contact" variant="primary" size="lg">
+      <Button href={CALENDLY_URL} data-calendly target="_blank" rel="noopener" variant="primary" size="lg">
         Réserver mon appel gratuit
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>

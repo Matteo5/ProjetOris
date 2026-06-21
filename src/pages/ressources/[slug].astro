@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Button from '../../components/Button.astro';
+import { articles, categoryColors } from '../../data/articles';
+import { CALENDLY_URL } from '../../config';
+
+export function getStaticPaths() {
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const accent = categoryColors[article.category] ?? 'var(--color-cta)';
+---
+
+<Layout title={article.title} description={article.excerpt}>
+  <!-- En-tête de l'article -->
+  <article class="py-16 sm:py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Fil d'Ariane -->
+      <a href="/ressources" class="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-cta)] transition-colors duration-200 mb-8 reveal">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Toutes les ressources
+      </a>
+
+      <!-- Méta -->
+      <div class="flex items-center gap-3 mb-5 text-xs reveal">
+        <span class="font-bold uppercase tracking-wide" style={`color: ${accent}`}>{article.category}</span>
+        <span class="text-[var(--color-text-muted)]">·</span>
+        <span class="text-[var(--color-text-muted)]">{fmtDate(article.date)}</span>
+        <span class="text-[var(--color-text-muted)]">·</span>
+        <span class="text-[var(--color-text-muted)]">{article.readingTime} de lecture</span>
+      </div>
+
+      <!-- Titre -->
+      <h1 class="text-3xl sm:text-4xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] leading-tight tracking-tight mb-10 reveal reveal-delay-100">
+        {article.title}
+      </h1>
+
+      <!-- Corps -->
+      <div class="article-body reveal reveal-delay-200" set:html={article.body}></div>
+
+      <!-- CTA final -->
+      <div class="mt-14 p-8 rounded-2xl bg-[var(--color-cta)]/6 border border-[var(--color-cta)]/20 text-center reveal">
+        <h2 class="text-xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-3">
+          Envie d'appliquer ça à votre entreprise ?
+        </h2>
+        <p class="text-sm text-[var(--color-text-muted)] mb-6 max-w-md mx-auto">
+          30 minutes pour identifier vos premières pistes d'automatisation. Gratuit et sans engagement.
+        </p>
+        <Button href={CALENDLY_URL} data-calendly target="_blank" rel="noopener" variant="primary" size="lg">
+          Réserver un appel découverte
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </Button>
+      </div>
+
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .article-body :global(p) {
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+  }
+  .article-body :global(h2) {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .article-body :global(ul) {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+    color: var(--color-text-muted);
+  }
+  .article-body :global(li) { margin-bottom: 0.5rem; line-height: 1.7; }
+  .article-body :global(strong) { color: var(--color-primary); font-weight: 700; }
+  .article-body :global(em) { font-style: italic; }
+</style>

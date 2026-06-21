@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { SITE_URL } from '../config';
 import '../styles/global.css';
 
 interface Props {
@@ -15,7 +16,10 @@ const {
   ogImage = '/og-default.png',
 } = Astro.props;
 
-const canonicalURL = Astro.url.href;
+const siteBase = Astro.site ?? new URL(SITE_URL);
+const canonicalURL = new URL(Astro.url.pathname, siteBase).href;
+// Les crawlers sociaux exigent une URL absolue pour l'image.
+const ogImageURL = new URL(ogImage, siteBase).href;
 const siteName = 'Oris';
 const fullTitle = `${title} — ${siteName}`;
 ---
@@ -41,13 +45,15 @@ const fullTitle = `${title} — ${siteName}`;
     <meta property="og:title"       content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url"         content={canonicalURL} />
-    <meta property="og:image"       content={ogImage} />
+    <meta property="og:image"       content={ogImageURL} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
     <meta name="twitter:title"       content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image"       content={ogImage} />
+    <meta name="twitter:image"       content={ogImageURL} />
 
     <!-- Sécurité basique via meta -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -55,6 +61,10 @@ const fullTitle = `${title} — ${siteName}`;
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Calendly (prise de rendez-vous) -->
+    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css" />
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
     <!-- Polices — Sora (heading) + Nunito (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -151,12 +161,38 @@ const fullTitle = `${title} — ${siteName}`;
         });
       }
 
+      /* ── Calendly popup ────────────────────── */
+      function initCalendly() {
+        document.querySelectorAll<HTMLElement>('[data-calendly]').forEach(el => {
+          if (el.dataset.calendlyBound) return;
+          el.dataset.calendlyBound = '1';
+          el.addEventListener('click', (e) => {
+            const url = el.getAttribute('href') || el.dataset.calendly;
+            // @ts-ignore — Calendly est injecté par le script externe
+            if (url && window.Calendly) {
+              e.preventDefault();
+              // @ts-ignore
+              window.Calendly.initPopupWidget({ url });
+            }
+            // Sinon : navigation normale vers le lien (fallback si le script échoue)
+          });
+        });
+      }
+
       initReveal();
       initCounters();
+      initCalendly();
       document.addEventListener('astro:page-load', () => {
         initReveal();
         initCounters();
+        initCalendly();
       });
+    </script>
+
+    <!-- Vercel Web Analytics (actif uniquement en production sur Vercel) -->
+    <script>
+      import { inject } from '@vercel/analytics';
+      inject();
     </script>
   </body>
 </html>

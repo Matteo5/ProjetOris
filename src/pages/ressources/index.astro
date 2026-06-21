@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { articles, categoryColors } from '../../data/articles';
+
+const sorted = [...articles].sort((a, b) => +new Date(b.date) - +new Date(a.date));
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Layout
+  title="Ressources"
+  description="Conseils pratiques sur l'automatisation et l'IA pour les PME, artisans et indépendants. Guides concrets par Oris."
+>
+  <!-- Hero -->
+  <section class="py-20 sm:py-24 bg-[var(--color-background)] relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none opacity-60" aria-hidden="true"
+         style="background-image: radial-gradient(rgba(67,56,202,0.07) 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-[var(--color-cta)] font-semibold text-xs uppercase tracking-[0.18em] mb-3 reveal">Ressources</p>
+      <h1 class="text-4xl sm:text-5xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-5 leading-tight tracking-tight reveal reveal-delay-100">
+        Conseils & guides pratiques
+      </h1>
+      <p class="text-base text-[var(--color-text-muted)] max-w-xl mx-auto reveal reveal-delay-200">
+        Des articles concrets pour comprendre l'automatisation et l'IA,
+        et les mettre au service de votre métier.
+      </p>
+    </div>
+  </section>
+
+  <!-- Liste des articles -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+        {sorted.map((a, i) => (
+          <div class={`reveal reveal-delay-${Math.min((i + 1) * 100, 300)} flex`}>
+            <a
+              href={`/ressources/${a.slug}`}
+              class="group flex flex-col h-full bg-white rounded-2xl border border-[var(--color-border)] overflow-hidden card-lift"
+              style="box-shadow: var(--shadow-sm);"
+            >
+              <!-- Bandeau coloré par catégorie -->
+              <div class="h-1.5 w-full" style={`background: ${categoryColors[a.category] ?? 'var(--color-cta)'}`}></div>
+              <div class="flex flex-col flex-1 p-7">
+                <div class="flex items-center gap-3 mb-4 text-xs">
+                  <span class="font-bold uppercase tracking-wide" style={`color: ${categoryColors[a.category] ?? 'var(--color-cta)'}`}>{a.category}</span>
+                  <span class="text-[var(--color-text-muted)]">·</span>
+                  <span class="text-[var(--color-text-muted)]">{a.readingTime}</span>
+                </div>
+                <h2 class="text-lg font-bold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-3 leading-snug group-hover:text-[var(--color-cta)] transition-colors duration-200">
+                  {a.title}
+                </h2>
+                <p class="text-sm text-[var(--color-text-muted)] leading-relaxed flex-1">{a.excerpt}</p>
+                <div class="flex items-center justify-between mt-5 pt-4 border-t border-[var(--color-border)]">
+                  <span class="text-xs text-[var(--color-text-muted)]">{fmtDate(a.date)}</span>
+                  <span class="inline-flex items-center gap-1.5 text-[var(--color-cta)] text-sm font-semibold">
+                    Lire
+                    <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

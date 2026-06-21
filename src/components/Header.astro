@@ -1,11 +1,13 @@
 ---
 import Button from './Button.astro';
+import { CALENDLY_URL } from '../config';
 
 const navLinks = [
-  { href: '/',         label: 'Accueil' },
-  { href: '/offres',   label: 'Offres' },
-  { href: '/a-propos', label: 'À propos' },
-  { href: '/contact',  label: 'Contact' },
+  { href: '/',           label: 'Accueil' },
+  { href: '/offres',     label: 'Offres' },
+  { href: '/ressources', label: 'Ressources' },
+  { href: '/a-propos',   label: 'À propos' },
+  { href: '/contact',    label: 'Contact' },
 ];
 
 const current = Astro.url.pathname;
@@ -53,7 +55,7 @@ const current = Astro.url.pathname;
 
       <!-- CTA desktop -->
       <div class="hidden md:flex items-center">
-        <Button href="/contact" variant="primary" size="md">Prendre rendez-vous</Button>
+        <Button href={CALENDLY_URL} data-calendly target="_blank" rel="noopener" variant="primary" size="md">Prendre rendez-vous</Button>
       </div>
 
       <!-- Burger mobile -->
@@ -101,7 +103,7 @@ const current = Astro.url.pathname;
         );
       })}
       <div class="pt-3 border-t border-[var(--color-border)]/60">
-        <Button href="/contact" variant="primary" class="w-full">Prendre rendez-vous</Button>
+        <Button href={CALENDLY_URL} data-calendly target="_blank" rel="noopener" variant="primary" class="w-full">Prendre rendez-vous</Button>
       </div>
     </div>
   </div>
