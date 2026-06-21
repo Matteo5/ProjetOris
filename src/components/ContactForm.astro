@@ -1,15 +1,21 @@
 ---
+import { FORMSPREE_ID } from '../config';
+const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 ---
 
 <div>
   <!-- Formulaire -->
   <form
     id="contact-form"
-    action="https://formspree.io/f/YOUR_FORM_ID"
+    action={formAction}
     method="POST"
     novalidate
     class="space-y-5"
   >
+    <!-- Objet de l'email reçu -->
+    <input type="hidden" name="_subject" value="Nouveau message depuis le site Oris" />
+    <!-- Anti-spam (honeypot) : invisible pour l'humain, piège les bots -->
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <div>
         <label for="prenom" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
