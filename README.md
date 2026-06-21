@@ -1,46 +1,51 @@
-# Astro Starter Kit: Basics
+# Oris — Site vitrine
+
+Site marketing B2B pour **Oris**, spécialiste de l'automatisation et de l'IA
+pour les PME, artisans et indépendants en Normandie.
+
+## Stack
+
+- **[Astro](https://astro.build)** — génération statique (SSG)
+- **[Tailwind CSS v4](https://tailwindcss.com)** — styles utilitaires
+- **TypeScript** (mode strict)
+- Polices : Sora (titres) + Nunito (corps)
+
+## Démarrage
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev        # serveur de dev sur http://localhost:4321
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Scripts
 
-## 🚀 Project Structure
+| Commande          | Action                                        |
+| ----------------- | --------------------------------------------- |
+| `npm run dev`     | Lance le serveur de développement             |
+| `npm run build`   | Build de production dans `./dist/`            |
+| `npm run preview` | Prévisualise le build localement              |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Structure
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```
+src/
+├── pages/        # Pages (index, offres, à-propos, contact, légales)
+├── components/   # Composants réutilisables (Header, Footer, cards…)
+├── layouts/      # Layout principal (header/footer + SEO)
+├── styles/       # Design system (variables, animations)
+└── assets/       # Images SVG
+public/
+└── logos/        # Logos des technologies (marquee accueil)
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Déploiement
 
-## 🧞 Commands
+Déployé sur [Vercel](https://vercel.com). Tout push sur `main` redéploie automatiquement.
+Astro statique est auto-détecté (build : `npm run build`, sortie : `dist`).
 
-All commands are run from the root of the project, from a terminal:
+## À compléter avant mise en production
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [ ] Formulaire de contact : remplacer `YOUR_FORM_ID` (Formspree) dans `src/components/ContactForm.astro`
+- [ ] Mentions légales : champs `[à compléter]` (SIRET, forme juridique, hébergeur…)
+- [ ] Politique de confidentialité : durées de conservation, responsable de traitement
+- [ ] Remplacer les témoignages et chiffres de démonstration par du contenu réel
