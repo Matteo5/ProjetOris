@@ -83,6 +83,12 @@ const steps = [
     desc: 'Formation, documentation, support : vos équipes maîtrisent les outils. On reste disponibles, jamais indispensables.',
     icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/></svg>',
   },
+  {
+    num: '05',
+    title: 'On reste à vos côtés',
+    desc: 'Un besoin, une évolution, une question ? On est là quand il faut, à votre rythme. Support et améliorations selon vos besoins, sans engagement.',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 5.636a9 9 0 010 12.728m-3.536-3.536a4 4 0 010-5.656M12 12h.01M8.464 8.464a4 4 0 000 5.656m-3.535-9.192a9 9 0 000 12.728"/></svg>',
+  },
 ];
 ---
 
@@ -202,17 +208,17 @@ const steps = [
           De votre premier appel<br/>à votre autonomie complète
         </h2>
         <p class="text-base text-[var(--color-text-muted)] max-w-xl mx-auto">
-          Une méthode en 4 étapes, simple et transparente. Vous savez toujours où vous en êtes.
+          Une méthode en 5 étapes, simple et transparente. Vous savez toujours où vous en êtes.
         </p>
       </div>
 
       <div class="relative">
         <!-- Ligne de progression animée (desktop) -->
-        <div class="hidden lg:block absolute top-9 left-[12.5%] right-[12.5%] h-0.5 bg-[var(--color-border)] rounded-full overflow-hidden" aria-hidden="true">
+        <div class="hidden lg:block absolute top-9 left-[10%] right-[10%] h-0.5 bg-[var(--color-border)] rounded-full overflow-hidden" aria-hidden="true">
           <div id="process-line" class="h-full w-0 bg-gradient-to-r from-[var(--color-cta)] to-[var(--color-accent)] rounded-full transition-[width] duration-[1400ms] ease-out"></div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-12">
           {steps.map((s, i) => (
             <div class={`group text-center reveal reveal-delay-${(i + 1) * 100}`}>
               <!-- Pastille numéro + icône -->
