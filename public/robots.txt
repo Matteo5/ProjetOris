@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://projet-oris.vercel.app/sitemap-index.xml
+Sitemap: https://snodo-digital.fr/sitemap-index.xml

@@ -20,7 +20,7 @@ const siteBase = Astro.site ?? new URL(SITE_URL);
 const canonicalURL = new URL(Astro.url.pathname, siteBase).href;
 // Les crawlers sociaux exigent une URL absolue pour l'image.
 const ogImageURL = new URL(ogImage, siteBase).href;
-const siteName = 'Oris';
+const siteName = 'Snodo';
 const fullTitle = `${title} — ${siteName}`;
 ---
 
@@ -82,10 +82,10 @@ const fullTitle = `${title} — ${siteName}`;
       {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
-        "name": "Oris",
+        "name": "Snodo",
         "description": "Solutions d'automatisation et d'IA pour PME et indépendants en Normandie.",
-        "url": "https://oris.fr",
-        "email": "contact@oris.fr",
+        "url": "https://snodo-digital.fr",
+        "email": "contact@snodo-digital.fr",
         "areaServed": {
           "@type": "State",
           "name": "Normandie"

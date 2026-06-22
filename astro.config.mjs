@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   // ⚠️ À synchroniser avec SITE_URL dans src/config.ts
-  site: 'https://projet-oris.vercel.app',
+  site: 'https://snodo-digital.fr',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()]
