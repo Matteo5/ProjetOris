@@ -24,24 +24,28 @@ const services = [
   },
 ];
 
-const testimonials = [
+/* Engagements concrets pris envers chaque client (remplace les témoignages
+   tant que nous n'avons pas de vrais retours à afficher). */
+const engagements = [
   {
-    quote: 'On perdait 2 heures par jour sur les relances. Maintenant tout part automatiquement. On se concentre enfin sur les chantiers.',
-    name: 'Pierre D.',
-    role: 'Artisan plombier, Rouen',
-    initials: 'PD',
+    title: 'Devis transparent',
+    desc: 'Un tarif clair annoncé à l\'avance, sans coût caché ni mauvaise surprise en fin de projet.',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>',
   },
   {
-    quote: 'L\'IA trie mes documents comptables en quelques secondes. J\'ai retrouvé un vrai confort de travail, c\'est bluffant.',
-    name: 'Sophie L.',
-    role: 'Expert-comptable, Caen',
-    initials: 'SL',
+    title: 'Vous restez maître',
+    desc: 'Vos outils, vos données, vos accès vous appartiennent. Aucune dépendance, aucune captivité technique.',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>',
   },
   {
-    quote: 'En 3 semaines, notre CRM était en place et nos équipes formées. Le ROI est visible dès le premier mois.',
-    name: 'Marc B.',
-    role: 'Dirigeant PME, Le Havre',
-    initials: 'MB',
+    title: 'Formation incluse',
+    desc: 'On forme vos équipes et on documente tout. Vous devenez autonomes — on ne se rend jamais indispensables.',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-7 1 12 12 0 01-7-1 12 12 0 01.84-4.42L12 14z"/></svg>',
+  },
+  {
+    title: 'Sans engagement',
+    desc: 'Pas de contrat qui vous enferme. On vous accompagne tant que vous y trouvez de la valeur, pas plus.',
+    icon: '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/></svg>',
   },
 ];
 
@@ -159,48 +163,30 @@ const stats = [
   <!-- ── MÉTIERS ────────────────────────────────────────── -->
   <MetierTabs />
 
-  <!-- ── TÉMOIGNAGES ───────────────────────────────────── -->
+  <!-- ── ENGAGEMENTS ───────────────────────────────────── -->
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
       <div class="text-center mb-16 reveal">
-        <p class="text-[var(--color-cta)] font-semibold text-xs uppercase tracking-[0.18em] mb-3">Témoignages</p>
-        <h2 class="text-3xl sm:text-4xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] leading-tight">
-          Ce qu'en disent nos clients
+        <p class="text-[var(--color-cta)] font-semibold text-xs uppercase tracking-[0.18em] mb-3">Nos engagements</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] leading-tight mb-4">
+          Ce sur quoi vous pouvez compter
         </h2>
+        <p class="text-base text-[var(--color-text-muted)] max-w-xl mx-auto">
+          Pas de promesses en l'air : voici les garanties que nous prenons avec chaque client, dès le premier échange.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {testimonials.map((t, i) => (
-          <div class={`reveal reveal-delay-${(i + 1) * 100}`}>
-            <div class="bg-[var(--color-background)] rounded-2xl p-8 border border-[var(--color-border)] card-lift relative overflow-hidden h-full flex flex-col" style="box-shadow: var(--shadow-sm);">
-              <!-- Guillemet décoratif -->
-              <span class="absolute top-3 right-5 text-7xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-cta)]/8 leading-none select-none" aria-hidden="true">"</span>
-
-              <!-- Étoiles -->
-              <div class="flex gap-1 mb-5" aria-label="5 étoiles sur 5">
-                {Array(5).fill(0).map(() => (
-                  <svg class="w-4 h-4 text-[var(--color-gold)]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                  </svg>
-                ))}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        {engagements.map((e, i) => (
+          <div class={`reveal reveal-delay-${(i + 1) * 100} flex`}>
+            <div class="group bg-[var(--color-background)] rounded-2xl p-7 border border-[var(--color-border)] card-lift h-full flex flex-col" style="box-shadow: var(--shadow-sm);">
+              <div class="w-12 h-12 rounded-xl bg-[var(--color-cta)]/10 flex items-center justify-center text-[var(--color-cta)] mb-5
+                          transition-colors duration-300 group-hover:bg-[var(--color-cta)] group-hover:text-white">
+                <Fragment set:html={e.icon} />
               </div>
-
-              <!-- Citation -->
-              <blockquote class="text-[var(--color-secondary)] leading-relaxed text-sm mb-6 flex-1 italic">
-                "{t.quote}"
-              </blockquote>
-
-              <!-- Auteur -->
-              <div class="flex items-center gap-3 mt-auto">
-                <div class="w-10 h-10 rounded-full bg-[var(--color-cta)]/12 flex items-center justify-center flex-shrink-0">
-                  <span class="text-[var(--color-cta)] font-bold text-xs font-[family-name:var(--font-heading)]">{t.initials}</span>
-                </div>
-                <div>
-                  <p class="font-bold text-[var(--color-primary)] text-sm">{t.name}</p>
-                  <p class="text-[var(--color-text-muted)] text-xs">{t.role}</p>
-                </div>
-              </div>
+              <h3 class="text-base font-bold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mb-2">{e.title}</h3>
+              <p class="text-[var(--color-text-muted)] text-sm leading-relaxed flex-1">{e.desc}</p>
             </div>
           </div>
         ))}
