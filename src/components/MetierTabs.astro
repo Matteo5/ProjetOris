@@ -89,13 +89,7 @@ const tabs = [
           aria-controls={`panel-${tab.id}`}
           aria-selected={i === 0 ? 'true' : 'false'}
           data-tab={tab.id}
-          class={[
-            'tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
-            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-cta)]',
-            i === 0
-              ? 'bg-[var(--color-cta)] text-white shadow-md'
-              : 'bg-white text-[var(--color-secondary)] border border-[var(--color-border)] hover:border-[var(--color-cta)]/40 hover:text-[var(--color-cta)]',
-          ].join(' ')}
+          class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-cta)]"
         >
           <Fragment set:html={tab.icon} />
           {tab.label}
@@ -145,37 +139,41 @@ const tabs = [
   </div>
 </section>
 
+<style>
+  /* État inactif (par défaut) */
+  .tab-btn {
+    background: #fff;
+    color: var(--color-secondary);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+  }
+  .tab-btn:not([aria-selected='true']):hover {
+    border-color: color-mix(in srgb, var(--color-cta) 40%, transparent);
+    color: var(--color-cta);
+  }
+  /* État actif */
+  .tab-btn[aria-selected='true'] {
+    background: var(--color-cta);
+    color: #fff;
+    border-color: var(--color-cta);
+    box-shadow: var(--shadow-md);
+  }
+</style>
+
 <script>
-  const tabBtns  = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
-  const panels   = document.querySelectorAll('.tab-panel');
+  const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const panels  = document.querySelectorAll('.tab-panel');
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const target = btn.dataset.tab;
 
-      /* Reset all */
-      tabBtns.forEach(t => {
-        t.setAttribute('aria-selected', 'false');
-        t.className = t.className
-          .replace('bg-[var(--color-cta)] text-white shadow-md', '')
-          + ' bg-white text-[var(--color-secondary)] border border-[var(--color-border)]';
-      });
+      /* Le style suit uniquement aria-selected (piloté par CSS) */
+      tabBtns.forEach(t => t.setAttribute('aria-selected', String(t === btn)));
 
-      /* Activate clicked */
-      btn.setAttribute('aria-selected', 'true');
-      btn.className = btn.className
-        .replace('bg-white text-[var(--color-secondary)] border border-[var(--color-border)]', '')
-        + ' bg-[var(--color-cta)] text-white shadow-md';
-
-      /* Show correct panel */
+      /* Affiche le bon panneau */
       panels.forEach(panel => {
-        if (panel.id === `panel-${target}`) {
-          panel.classList.remove('hidden');
-          panel.classList.add('tab-panel-active');
-        } else {
-          panel.classList.add('hidden');
-          panel.classList.remove('tab-panel-active');
-        }
+        panel.classList.toggle('hidden', panel.id !== `panel-${target}`);
       });
     });
   });
