@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
+import OfferModal from '../components/OfferModal.astro';
 
 /* ── AUTOMATISATION & IA ────────────────────────────────── */
 const autoPlans = [
@@ -292,9 +293,9 @@ const steps = [
                 ))}
               </ul>
               {plan.featured ? (
-                <a href="/contact" class="block text-center w-full px-6 py-3 bg-white text-[var(--color-cta)] font-bold rounded-xl hover:bg-slate-100 transition-colors duration-200 active:scale-[0.97] text-sm">{plan.cta}</a>
+                <button type="button" data-offer-trigger data-offer-name={plan.label} data-offer-price={`${plan.price} ${plan.priceSub}${plan.priceMonthly ? ` · ${plan.priceMonthly}` : ''}`} class="block text-center w-full px-6 py-3 bg-white text-[var(--color-cta)] font-bold rounded-xl hover:bg-slate-100 transition-colors duration-200 active:scale-[0.97] text-sm cursor-pointer">{plan.cta}</button>
               ) : (
-                <Button href="/contact" variant={plan.ctaVariant} class="w-full mt-auto">{plan.cta}</Button>
+                <Button data-offer-trigger data-offer-name={plan.label} data-offer-price={`${plan.price} ${plan.priceSub}${plan.priceMonthly ? ` · ${plan.priceMonthly}` : ''}`} variant={plan.ctaVariant} class="w-full mt-auto">{plan.cta}</Button>
               )}
             </article>
           </div>
@@ -343,9 +344,9 @@ const steps = [
                 ))}
               </ul>
               {plan.featured ? (
-                <a href="/contact" class="block text-center w-full px-6 py-3 bg-white text-[var(--color-cta)] font-bold rounded-xl hover:bg-slate-100 transition-colors duration-200 active:scale-[0.97] text-sm">{plan.cta}</a>
+                <button type="button" data-offer-trigger data-offer-name={plan.label} data-offer-price={`${plan.price} ${plan.priceSub}${plan.priceMonthly ? ` · ${plan.priceMonthly}` : ''}`} class="block text-center w-full px-6 py-3 bg-white text-[var(--color-cta)] font-bold rounded-xl hover:bg-slate-100 transition-colors duration-200 active:scale-[0.97] text-sm cursor-pointer">{plan.cta}</button>
               ) : (
-                <Button href="/contact" variant={plan.ctaVariant} class="w-full mt-auto">{plan.cta}</Button>
+                <Button data-offer-trigger data-offer-name={plan.label} data-offer-price={`${plan.price} ${plan.priceSub}${plan.priceMonthly ? ` · ${plan.priceMonthly}` : ''}`} variant={plan.ctaVariant} class="w-full mt-auto">{plan.cta}</Button>
               )}
             </article>
           </div>
@@ -482,6 +483,9 @@ const steps = [
       obs.observe(line);
     }
   </script>
+
+  <!-- Mini-fenêtre de contact, ouverte au clic sur une offre -->
+  <OfferModal />
 
 </Layout>
 

@@ -1,0 +1,472 @@
+---
+/*
+ * Mini-fenêtre de contact pré-remplie, ouverte au clic sur une offre.
+ * Le visiteur ne quitte jamais la page : 2 champs (prénom + email),
+ * envoi AJAX vers Formspree, état de succès intégré.
+ *
+ * Déclencheurs : tout élément portant l'attribut `data-offer-trigger`
+ * avec `data-offer-name` (nom de l'offre) et `data-offer-price` (récap prix).
+ */
+import { FORMSPREE_ID } from '../config';
+const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
+---
+
+<div id="offer-modal" class="offer-modal" hidden role="dialog" aria-modal="true" aria-labelledby="offer-modal-title">
+  <div class="offer-backdrop" data-offer-close aria-hidden="true"></div>
+
+  <div class="offer-panel" role="document">
+    <button type="button" class="offer-close" data-offer-close aria-label="Fermer la fenêtre">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- ── Formulaire ─────────────────────────────── -->
+    <div id="offer-form-wrap">
+      <span class="offer-eyebrow">Votre choix</span>
+      <h2 id="offer-modal-title" class="offer-title">
+        Formule <span id="offer-name" class="text-[var(--color-cta)]"></span>
+      </h2>
+      <p id="offer-price" class="offer-price"></p>
+      <p class="offer-reassure">
+        Laissez-nous votre prénom et votre email : on vous recontacte sous 24h, sans engagement.
+      </p>
+
+      <form id="offer-form" action={formAction} method="POST" novalidate class="offer-fields">
+        <input type="hidden" name="_subject" id="offer-subject" value="Demande depuis le site Snodo" />
+        <input type="hidden" name="offre" id="offer-hidden-name" value="" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+        <div>
+          <label for="offer-prenom" class="offer-label">Prénom <span class="text-[var(--color-cta)]">*</span></label>
+          <input type="text" id="offer-prenom" name="prenom" required autocomplete="given-name"
+                 placeholder="Jean" class="offer-input" aria-describedby="offer-err-prenom" />
+          <p id="offer-err-prenom" class="offer-error hidden"></p>
+        </div>
+
+        <div>
+          <label for="offer-email" class="offer-label">Email <span class="text-[var(--color-cta)]">*</span></label>
+          <input type="email" id="offer-email" name="email" required autocomplete="email"
+                 placeholder="jean@entreprise.fr" class="offer-input" aria-describedby="offer-err-email" />
+          <p id="offer-err-email" class="offer-error hidden"></p>
+        </div>
+
+        <div>
+          <label for="offer-message" class="offer-label">
+            Un mot sur votre besoin <span class="offer-optional">(facultatif)</span>
+          </label>
+          <textarea id="offer-message" name="message" rows="3" placeholder="Quelques lignes si vous voulez préciser…"
+                    class="offer-input resize-y"></textarea>
+        </div>
+
+        <div id="offer-global-error" class="offer-global-error hidden" role="alert">
+          Une erreur est survenue. Réessayez ou écrivez-nous à contact@snodo-digital.fr.
+        </div>
+
+        <button type="submit" id="offer-submit" class="offer-submit group">
+          <span id="offer-submit-label">Envoyer ma demande</span>
+          <svg id="offer-submit-icon" class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+          <svg id="offer-submit-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+          </svg>
+        </button>
+
+        <p class="offer-smallprint">
+          <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          Vos données restent confidentielles. Préférez un appel ?
+          <a href="/contact" class="offer-link">Voir toutes nos coordonnées</a>.
+        </p>
+      </form>
+    </div>
+
+    <!-- ── Succès ─────────────────────────────────── -->
+    <div id="offer-success" class="offer-success" hidden>
+      <div class="offer-success-icon">
+        <svg class="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h3 class="offer-success-title">Demande envoyée !</h3>
+      <p class="offer-success-text">
+        Merci. On revient vers vous sous 24h ouvrées pour parler de votre projet.
+      </p>
+      <button type="button" class="offer-success-close" data-offer-close>Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal      = document.getElementById('offer-modal');
+  const panel      = modal?.querySelector('.offer-panel') as HTMLElement | null;
+  const form       = document.getElementById('offer-form') as HTMLFormElement | null;
+  const formWrap   = document.getElementById('offer-form-wrap');
+  const success    = document.getElementById('offer-success');
+  const nameEl     = document.getElementById('offer-name');
+  const priceEl    = document.getElementById('offer-price');
+  const subjectEl  = document.getElementById('offer-subject') as HTMLInputElement | null;
+  const hiddenName = document.getElementById('offer-hidden-name') as HTMLInputElement | null;
+  const globalErr  = document.getElementById('offer-global-error');
+  const submitBtn  = document.getElementById('offer-submit') as HTMLButtonElement | null;
+  const submitLbl  = document.getElementById('offer-submit-label');
+  const submitIcon = document.getElementById('offer-submit-icon');
+  const submitSpin = document.getElementById('offer-submit-spinner');
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let lastFocused: HTMLElement | null = null;
+
+  /* ── Ouverture ──────────────────────────────────── */
+  function openModal(trigger: HTMLElement) {
+    if (!modal) return;
+    const name  = trigger.dataset.offerName ?? '';
+    const price = trigger.dataset.offerPrice ?? '';
+
+    if (nameEl) nameEl.textContent = name;
+    if (priceEl) priceEl.textContent = price;
+    if (subjectEl) subjectEl.value = `Demande « ${name} » depuis le site Snodo`;
+    if (hiddenName) hiddenName.value = name;
+
+    // remet le formulaire à zéro si on rouvre après un succès
+    form?.reset();
+    form?.classList.remove('hidden');
+    formWrap?.classList.remove('hidden');
+    success?.setAttribute('hidden', '');
+    globalErr?.classList.add('hidden');
+    setLoading(false);
+    modal.querySelectorAll('.offer-error').forEach(e => e.classList.add('hidden'));
+
+    lastFocused = document.activeElement as HTMLElement;
+    modal.removeAttribute('hidden');
+    // reflow pour relancer l'animation
+    void modal.offsetWidth;
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => document.getElementById('offer-prenom')?.focus(), 80);
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    setTimeout(() => modal.setAttribute('hidden', ''), 250);
+    lastFocused?.focus();
+  }
+
+  /* ── Branche les déclencheurs ───────────────────── */
+  document.querySelectorAll<HTMLElement>('[data-offer-trigger]').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal(trigger);
+    });
+  });
+
+  modal?.querySelectorAll('[data-offer-close]').forEach(el => {
+    el.addEventListener('click', closeModal);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) closeModal();
+    // piège à focus minimal
+    if (e.key === 'Tab' && modal && !modal.hasAttribute('hidden') && panel) {
+      const focusables = panel.querySelectorAll<HTMLElement>(
+        'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+      );
+      const list = Array.from(focusables).filter(el => !el.hasAttribute('hidden') && el.offsetParent !== null);
+      if (list.length === 0) return;
+      const first = list[0], last = list[list.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* ── Validation + envoi ─────────────────────────── */
+  function fieldError(id: string, msg: string) {
+    const el = document.getElementById(id);
+    const input = document.getElementById(id.replace('-err-', '-')) as HTMLInputElement | null;
+    if (el) {
+      el.textContent = msg;
+      el.classList.toggle('hidden', !msg);
+    }
+    if (input) {
+      if (msg) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    }
+  }
+
+  function setLoading(loading: boolean) {
+    if (!submitBtn) return;
+    submitBtn.disabled = loading;
+    if (submitLbl) submitLbl.textContent = loading ? 'Envoi en cours…' : 'Envoyer ma demande';
+    submitIcon?.classList.toggle('hidden', loading);
+    submitSpin?.classList.toggle('hidden', !loading);
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    globalErr?.classList.add('hidden');
+
+    const prenom = (document.getElementById('offer-prenom') as HTMLInputElement).value.trim();
+    const email  = (document.getElementById('offer-email') as HTMLInputElement).value.trim();
+
+    let ok = true;
+    if (!prenom) { fieldError('offer-err-prenom', 'Votre prénom, s\'il vous plaît.'); ok = false; }
+    else fieldError('offer-err-prenom', '');
+    if (!email) { fieldError('offer-err-email', 'L\'email est requis.'); ok = false; }
+    else if (!EMAIL_RE.test(email)) { fieldError('offer-err-email', 'Adresse email invalide.'); ok = false; }
+    else fieldError('offer-err-email', '');
+
+    if (!ok) {
+      (document.querySelector('#offer-form [aria-invalid="true"]') as HTMLElement | null)?.focus();
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        formWrap?.classList.add('hidden');
+        success?.removeAttribute('hidden');
+      } else {
+        globalErr?.classList.remove('hidden');
+        setLoading(false);
+      }
+    } catch {
+      globalErr?.classList.remove('hidden');
+      setLoading(false);
+    }
+  });
+
+  /* validation en direct après une première erreur */
+  ['offer-prenom', 'offer-email'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.getAttribute('aria-invalid') === 'true') {
+        const errId = `offer-err-${id.replace('offer-', '')}`;
+        if (id === 'offer-email') {
+          const v = input.value.trim();
+          fieldError(errId, !v ? 'L\'email est requis.' : EMAIL_RE.test(v) ? '' : 'Adresse email invalide.');
+        } else {
+          fieldError(errId, input.value.trim() ? '' : 'Votre prénom, s\'il vous plaît.');
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .offer-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .offer-modal[hidden] { display: none; }
+
+  .offer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 26, 46, 0.55);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity 0.25s var(--ease-smooth);
+  }
+  .offer-modal.is-open .offer-backdrop { opacity: 1; }
+
+  .offer-panel {
+    position: relative;
+    width: 100%;
+    max-width: 30rem;
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-xl);
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    transition: opacity 0.3s var(--ease-smooth), transform 0.35s var(--ease-spring);
+  }
+  .offer-modal.is-open .offer-panel {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .offer-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    color: var(--color-text-muted);
+    background: var(--color-background);
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  .offer-close:hover { background: var(--color-border); color: var(--color-primary); }
+
+  .offer-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-cta);
+    margin-bottom: 0.5rem;
+  }
+  .offer-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+    padding-right: 2.5rem;
+  }
+  .offer-price {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+  }
+  .offer-reassure {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .offer-fields { display: flex; flex-direction: column; gap: 1rem; }
+  .offer-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.4rem;
+  }
+  .offer-optional { font-weight: 400; text-transform: none; color: var(--color-text-muted); }
+
+  .offer-input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: #fff;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .offer-input::placeholder { color: color-mix(in srgb, var(--color-text-muted) 45%, transparent); }
+  .offer-input:focus {
+    outline: none;
+    border-color: var(--color-cta);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-cta) 10%, transparent);
+  }
+  .offer-input[aria-invalid='true'] {
+    border-color: #f87171;
+    box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.12);
+  }
+
+  .offer-error { font-size: 0.75rem; color: #dc2626; margin-top: 0.35rem; }
+  .offer-global-error {
+    font-size: 0.85rem;
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.75rem;
+    padding: 0.7rem 0.9rem;
+  }
+
+  .offer-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--color-cta);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .offer-submit:hover { background: var(--color-cta-hover); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+  .offer-submit:active { transform: scale(0.98); }
+  .offer-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .offer-smallprint {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: color-mix(in srgb, var(--color-text-muted) 80%, transparent);
+    line-height: 1.5;
+  }
+  .offer-link { color: var(--color-cta); font-weight: 600; }
+  .offer-link:hover { text-decoration: underline; }
+
+  /* ── Succès ─────────────────────────────────────── */
+  .offer-success { text-align: center; padding: 1.5rem 0.5rem; }
+  .offer-success[hidden] { display: none; }
+  .offer-success-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1.25rem;
+    border-radius: 9999px;
+    background: #dcfce7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .offer-success-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+  .offer-success-text {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 22rem;
+    margin: 0 auto 1.5rem;
+  }
+  .offer-success-close {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .offer-success-close:hover { border-color: var(--color-cta); color: var(--color-cta); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .offer-backdrop, .offer-panel { transition: none !important; }
+    .offer-panel { transform: none !important; }
+  }
+</style>
