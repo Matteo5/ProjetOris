@@ -1,6 +1,16 @@
 ---
 import { FORMSPREE_ID } from '../config';
 const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
+
+const inputClass =
+  'w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] ' +
+  'text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm ' +
+  'focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none ' +
+  'transition-all duration-200 ' +
+  'aria-[invalid=true]:border-red-400 aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-red-100';
+
+const labelClass =
+  'block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide';
 ---
 
 <div>
@@ -16,78 +26,117 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
     <input type="hidden" name="_subject" value="Nouveau message depuis le site Oris" />
     <!-- Anti-spam (honeypot) : invisible pour l'humain, piège les bots -->
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <div>
-        <label for="prenom" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
+        <label for="prenom" class={labelClass}>
           Prénom <span class="text-[var(--color-cta)]">*</span>
         </label>
         <input
           type="text" id="prenom" name="prenom" required autocomplete="given-name"
-          placeholder="Jean"
-          class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
-                 text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
-                 focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
-                 transition-all duration-200"
+          placeholder="Jean" aria-describedby="err-prenom"
+          class={inputClass}
         />
+        <p id="err-prenom" class="field-error hidden mt-1.5 text-xs text-red-600"></p>
       </div>
       <div>
-        <label for="nom" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
+        <label for="nom" class={labelClass}>
           Nom <span class="text-[var(--color-cta)]">*</span>
         </label>
         <input
           type="text" id="nom" name="nom" required autocomplete="family-name"
-          placeholder="Martin"
-          class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
-                 text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
-                 focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
-                 transition-all duration-200"
+          placeholder="Martin" aria-describedby="err-nom"
+          class={inputClass}
         />
+        <p id="err-nom" class="field-error hidden mt-1.5 text-xs text-red-600"></p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div>
+        <label for="email" class={labelClass}>
+          Email <span class="text-[var(--color-cta)]">*</span>
+        </label>
+        <input
+          type="email" id="email" name="email" required autocomplete="email"
+          placeholder="jean.martin@entreprise.fr" aria-describedby="err-email"
+          class={inputClass}
+        />
+        <p id="err-email" class="field-error hidden mt-1.5 text-xs text-red-600"></p>
+      </div>
+      <div>
+        <label for="telephone" class={labelClass}>
+          Téléphone <span class="text-[var(--color-text-muted)] normal-case font-normal">(optionnel)</span>
+        </label>
+        <input
+          type="tel" id="telephone" name="telephone" autocomplete="tel"
+          placeholder="06 12 34 56 78" aria-describedby="err-telephone"
+          class={inputClass}
+        />
+        <p id="err-telephone" class="field-error hidden mt-1.5 text-xs text-red-600"></p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div>
+        <label for="entreprise" class={labelClass}>
+          Entreprise <span class="text-[var(--color-text-muted)] normal-case font-normal">(optionnel)</span>
+        </label>
+        <input
+          type="text" id="entreprise" name="entreprise" autocomplete="organization"
+          placeholder="Mon entreprise"
+          class={inputClass}
+        />
+      </div>
+      <div>
+        <label for="sujet" class={labelClass}>
+          Votre besoin <span class="text-[var(--color-cta)]">*</span>
+        </label>
+        <select id="sujet" name="sujet" required aria-describedby="err-sujet" class={`${inputClass} cursor-pointer`}>
+          <option value="" disabled selected>Sélectionnez…</option>
+          <option value="Automatisation">Automatisation de tâches</option>
+          <option value="Intelligence artificielle">Intelligence artificielle</option>
+          <option value="Conseil & Formation">Conseil &amp; formation</option>
+          <option value="Autre">Autre / je ne sais pas encore</option>
+        </select>
+        <p id="err-sujet" class="field-error hidden mt-1.5 text-xs text-red-600"></p>
       </div>
     </div>
 
     <div>
-      <label for="email" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
-        Email <span class="text-[var(--color-cta)]">*</span>
-      </label>
-      <input
-        type="email" id="email" name="email" required autocomplete="email"
-        placeholder="jean.martin@entreprise.fr"
-        class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
-               text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
-               focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
-               transition-all duration-200"
-      />
-    </div>
-
-    <div>
-      <label for="entreprise" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
-        Entreprise <span class="text-[var(--color-text-muted)] normal-case font-normal">(optionnel)</span>
-      </label>
-      <input
-        type="text" id="entreprise" name="entreprise" autocomplete="organization"
-        placeholder="Mon entreprise"
-        class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
-               text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
-               focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
-               transition-all duration-200"
-      />
-    </div>
-
-    <div>
-      <label for="message" class="block text-xs font-semibold text-[var(--color-primary)] mb-1.5 uppercase tracking-wide">
+      <label for="message" class={labelClass}>
         Message <span class="text-[var(--color-cta)]">*</span>
       </label>
       <textarea
         id="message" name="message" rows="5" required
-        placeholder="Décrivez votre projet ou votre besoin..."
-        class="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]
-               text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 text-sm
-               focus:border-[var(--color-cta)] focus:ring-2 focus:ring-[var(--color-cta)]/15 focus:outline-none
-               transition-all duration-200 resize-y min-h-[130px]"
+        placeholder="Décrivez votre projet ou votre besoin…" aria-describedby="err-message msg-count"
+        class={`${inputClass} resize-y min-h-[130px]`}
       ></textarea>
+      <div class="flex justify-between items-center mt-1.5">
+        <p id="err-message" class="field-error hidden text-xs text-red-600"></p>
+        <span id="msg-count" class="text-xs text-[var(--color-text-muted)]/60 ml-auto">0 caractère</span>
+      </div>
     </div>
 
-    <!-- Error message -->
+    <!-- Consentement RGPD -->
+    <div>
+      <label class="flex items-start gap-3 cursor-pointer group">
+        <input
+          type="checkbox" id="consentement" name="consentement" required value="oui"
+          aria-describedby="err-consentement"
+          class="mt-0.5 w-4 h-4 rounded border-[var(--color-border)] text-[var(--color-cta)]
+                 focus:ring-2 focus:ring-[var(--color-cta)]/30 cursor-pointer flex-shrink-0"
+        />
+        <span class="text-xs text-[var(--color-text-muted)] leading-relaxed">
+          J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la
+          <a href="/confidentialite" class="text-[var(--color-cta)] font-semibold hover:underline">politique de confidentialité</a>.
+          <span class="text-[var(--color-cta)]">*</span>
+        </span>
+      </label>
+      <p id="err-consentement" class="field-error hidden mt-1.5 text-xs text-red-600"></p>
+    </div>
+
+    <!-- Error message global -->
     <div id="form-error" class="hidden rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700" role="alert">
       Une erreur est survenue. Merci de réessayer ou de nous écrire directement à contact@oris.fr.
     </div>
@@ -132,13 +181,72 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 </div>
 
 <script>
-  const form      = document.getElementById('contact-form') as HTMLFormElement | null;
-  const success   = document.getElementById('form-success');
-  const error     = document.getElementById('form-error');
-  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const form    = document.getElementById('contact-form') as HTMLFormElement | null;
+  const success = document.getElementById('form-success');
+  const error   = document.getElementById('form-error');
+  const submitBtn     = document.getElementById('submit-btn') as HTMLButtonElement | null;
   const submitLabel   = document.getElementById('submit-label');
   const submitIcon    = document.getElementById('submit-icon');
   const submitSpinner = document.getElementById('submit-spinner');
+  const msgCount      = document.getElementById('msg-count');
+  const message       = document.getElementById('message') as HTMLTextAreaElement | null;
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const PHONE_RE = /^[+0-9().\-\s]{6,}$/;
+
+  type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+  /* Renvoie un message d'erreur, ou '' si le champ est valide. */
+  function validate(field: Field): string {
+    const v = field.value.trim();
+    switch (field.name) {
+      case 'prenom':
+      case 'nom':
+        return v ? '' : 'Ce champ est requis.';
+      case 'email':
+        if (!v) return 'L\'email est requis.';
+        return EMAIL_RE.test(v) ? '' : 'Adresse email invalide.';
+      case 'telephone':
+        return !v || PHONE_RE.test(v) ? '' : 'Numéro de téléphone invalide.';
+      case 'sujet':
+        return v ? '' : 'Merci de choisir un besoin.';
+      case 'message':
+        if (!v) return 'Le message est requis.';
+        return v.length >= 10 ? '' : 'Message trop court (10 caractères min).';
+      case 'consentement':
+        return (field as HTMLInputElement).checked ? '' : 'Votre accord est nécessaire pour envoyer le message.';
+      default:
+        return '';
+    }
+  }
+
+  function showError(field: Field, msg: string) {
+    const errEl = document.getElementById(`err-${field.name}`);
+    if (msg) {
+      field.setAttribute('aria-invalid', 'true');
+      if (errEl) { errEl.textContent = msg; errEl.classList.remove('hidden'); }
+    } else {
+      field.removeAttribute('aria-invalid');
+      if (errEl) { errEl.textContent = ''; errEl.classList.add('hidden'); }
+    }
+  }
+
+  /* Validation au blur (après une première interaction) */
+  form?.querySelectorAll<Field>('input, select, textarea').forEach(field => {
+    if (field.name.startsWith('_') || field.name === 'entreprise') return;
+    field.addEventListener('blur', () => showError(field, validate(field)));
+    field.addEventListener('input', () => {
+      if (field.getAttribute('aria-invalid') === 'true') showError(field, validate(field));
+    });
+  });
+
+  /* Compteur de caractères */
+  message?.addEventListener('input', () => {
+    if (msgCount) {
+      const n = message.value.length;
+      msgCount.textContent = `${n} caractère${n > 1 ? 's' : ''}`;
+    }
+  });
 
   function setLoading(loading: boolean) {
     if (!submitBtn) return;
@@ -151,18 +259,31 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     error?.classList.add('hidden');
-    setLoading(true);
 
+    /* Validation complète */
+    let firstInvalid: Field | null = null;
+    form.querySelectorAll<Field>('input, select, textarea').forEach(field => {
+      if (field.name.startsWith('_') || field.name === 'entreprise') return;
+      const msg = validate(field);
+      showError(field, msg);
+      if (msg && !firstInvalid) firstInvalid = field;
+    });
+    if (firstInvalid) {
+      (firstInvalid as Field).focus();
+      return;
+    }
+
+    setLoading(true);
     try {
       const res = await fetch(form.action, {
         method:  'POST',
         body:    new FormData(form),
         headers: { Accept: 'application/json' },
       });
-
       if (res.ok) {
         form.classList.add('hidden');
         success?.classList.remove('hidden');
+        success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
         error?.classList.remove('hidden');
         setLoading(false);
