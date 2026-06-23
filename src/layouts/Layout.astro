@@ -84,9 +84,9 @@ const businessSchema = {
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Calendly (prise de rendez-vous) -->
-    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css" />
-    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <!-- Calendly : chargé à la demande (voir initCalendly plus bas) pour ne pas
+         alourdir le chargement initial de chaque page. Préconnexion seulement. -->
+    <link rel="preconnect" href="https://assets.calendly.com" />
 
     <!-- Polices — Sora (heading) + Nunito (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -194,22 +194,45 @@ const businessSchema = {
         });
       }
 
-      /* ── Calendly popup ────────────────────── */
+      /* ── Calendly popup (chargé à la demande) ─ */
+      let calendlyPromise: Promise<void> | null = null;
+      function loadCalendly(): Promise<void> {
+        // @ts-ignore — Calendly est injecté par le script externe
+        if (window.Calendly) return Promise.resolve();
+        if (calendlyPromise) return calendlyPromise;
+        calendlyPromise = new Promise<void>((resolve) => {
+          const css = document.createElement('link');
+          css.rel = 'stylesheet';
+          css.href = 'https://assets.calendly.com/assets/external/widget.css';
+          document.head.appendChild(css);
+          const js = document.createElement('script');
+          js.src = 'https://assets.calendly.com/assets/external/widget.js';
+          js.async = true;
+          js.onload = () => resolve();
+          document.head.appendChild(js);
+        });
+        return calendlyPromise;
+      }
+
       function initCalendly() {
-        document.querySelectorAll<HTMLElement>('[data-calendly]').forEach(el => {
+        const triggers = document.querySelectorAll<HTMLElement>('[data-calendly]');
+        if (!triggers.length) return;
+        triggers.forEach(el => {
           if (el.dataset.calendlyBound) return;
           el.dataset.calendlyBound = '1';
-          el.addEventListener('click', (e) => {
+          el.addEventListener('click', async (e) => {
             const url = el.getAttribute('href') || el.dataset.calendly;
-            // @ts-ignore — Calendly est injecté par le script externe
-            if (url && window.Calendly) {
-              e.preventDefault();
-              // @ts-ignore
-              window.Calendly.initPopupWidget({ url });
-            }
-            // Sinon : navigation normale vers le lien (fallback si le script échoue)
+            if (!url) return;
+            e.preventDefault();
+            await loadCalendly();
+            // @ts-ignore
+            window.Calendly?.initPopupWidget({ url });
           });
         });
+        // Préchauffe le script pendant un temps mort, sans bloquer le rendu initial.
+        if ('requestIdleCallback' in window) {
+          (window as any).requestIdleCallback(() => loadCalendly());
+        }
       }
 
       /* ── Tilt 3D au survol des cartes ──────── */

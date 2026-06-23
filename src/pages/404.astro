@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+
+const links = [
+  { href: '/',           label: 'Accueil' },
+  { href: '/offres',     label: 'Nos offres' },
+  { href: '/ressources', label: 'Ressources' },
+  { href: '/contact',    label: 'Contact' },
+];
+---
+
+<Layout
+  title="Page introuvable"
+  description="La page que vous cherchez n'existe pas ou a été déplacée."
+>
+  <section class="relative min-h-[70vh] flex items-center overflow-hidden bg-[var(--color-background)] py-24">
+    <!-- Orbes animés -->
+    <div class="absolute -top-24 left-1/4 w-80 h-80 rounded-full mesh-orb pointer-events-none" data-parallax="0.12"
+         style="background: radial-gradient(circle, rgba(67,56,202,0.16), transparent 70%);" aria-hidden="true"></div>
+    <div class="absolute bottom-0 right-1/4 w-72 h-72 rounded-full mesh-orb-2 pointer-events-none" data-parallax="-0.1"
+         style="background: radial-gradient(circle, rgba(6,182,212,0.14), transparent 70%);" aria-hidden="true"></div>
+
+    <div class="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-[7rem] sm:text-[10rem] font-extrabold font-[family-name:var(--font-heading)] leading-none gradient-text reveal">
+        404
+      </p>
+      <h1 class="text-2xl sm:text-3xl font-extrabold font-[family-name:var(--font-heading)] text-[var(--color-primary)] mt-2 mb-4 reveal reveal-delay-100">
+        Cette page s'est volatilisée
+      </h1>
+      <p class="text-base text-[var(--color-text-muted)] max-w-md mx-auto mb-8 reveal reveal-delay-200">
+        Le lien est peut-être erroné, ou la page a été déplacée.
+        Pas de panique — voici par où repartir.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center mb-10 reveal reveal-delay-300">
+        <Button href="/" variant="primary" size="lg">
+          Retour à l'accueil
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </Button>
+        <Button href="/contact" variant="secondary" size="lg">Nous contacter</Button>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 reveal reveal-delay-400">
+        {links.map(link => (
+          <a href={link.href} class="text-sm font-semibold text-[var(--color-cta)] hover:underline">{link.label}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

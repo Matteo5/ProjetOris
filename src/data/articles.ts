@@ -14,6 +14,44 @@ export interface Article {
 
 export const articles: Article[] = [
   {
+    slug: 'site-vitrine-tpe-pourquoi-comment',
+    title: 'Site vitrine pour TPE : pourquoi (et comment) bien le faire',
+    excerpt:
+      'Un site lent ou daté fait fuir vos clients avant même le premier contact. Voici ce qui compte vraiment pour une petite entreprise.',
+    date: '2026-06-22',
+    readingTime: '5 min',
+    category: 'Site web',
+    body: `
+      <p>Aujourd'hui, votre site est souvent le premier contact qu'un client a avec vous — avant même un appel. En quelques secondes, il se fait une opinion. Un site lent, daté ou illisible sur mobile, et il part voir ailleurs. La bonne nouvelle : un site vitrine efficace n'a pas besoin d'être compliqué.</p>
+      <h2>1. La vitesse, ça change tout</h2>
+      <p>Plus de la moitié des visiteurs quittent une page qui met plus de trois secondes à charger. Un site rapide retient l'attention, rassure, et plaît à Google — qui favorise les sites performants dans ses résultats.</p>
+      <h2>2. Être trouvé sur Google</h2>
+      <p>Un beau site invisible ne sert à rien. Quelques fondations de référencement (titres clairs, descriptions, structure propre, balises de partage) suffisent à apparaître sur les recherches de votre métier et de votre région.</p>
+      <h2>3. L'essentiel, bien présenté</h2>
+      <p>Qui vous êtes, ce que vous proposez, vos réalisations, et un moyen simple de vous contacter. Pas besoin de dix pages : une vitrine claire et soignée convertit mieux qu'un site touffu.</p>
+      <p><strong>À retenir :</strong> rapide, visible sur Google, impeccable sur mobile, et un bouton de contact qui marche. Le reste est du bonus.</p>
+    `,
+  },
+  {
+    slug: 'automatiser-prise-rendez-vous',
+    title: 'Ne perdez plus de clients faute de réponse : automatisez vos rendez-vous',
+    excerpt:
+      'Un prospect qui ne peut pas réserver tout de suite va voir ailleurs. Comment fluidifier la prise de rendez-vous sans y penser.',
+    date: '2026-06-18',
+    readingTime: '4 min',
+    category: 'Automatisation',
+    body: `
+      <p>Combien de clients potentiels perdez-vous parce qu'ils vous appellent pendant que vous êtes occupé, et ne rappellent jamais ? Pour beaucoup d'artisans et d'indépendants, la prise de rendez-vous est un vrai point de fuite. Elle s'automatise facilement.</p>
+      <h2>Laisser le client réserver lui-même</h2>
+      <p>Un lien de réservation en ligne, relié à votre agenda, permet à un prospect de choisir un créneau libre à toute heure — même le soir ou le week-end, quand vous ne pouvez pas décrocher.</p>
+      <h2>Confirmer et rappeler automatiquement</h2>
+      <p>Une fois le rendez-vous pris, un email et un SMS de confirmation partent tout seuls, suivis d'un rappel la veille. Résultat : moins de rendez-vous oubliés, moins de trous dans votre planning.</p>
+      <h2>Tout reste centralisé</h2>
+      <p>Chaque réservation s'ajoute à votre agenda et, si besoin, crée une fiche client. Vous gardez une vue d'ensemble sans rien saisir à la main.</p>
+      <p><strong>Le gain :</strong> vous captez les demandes 24h/24 et vous arrêtez de jouer au ping-pong téléphonique.</p>
+    `,
+  },
+  {
     slug: 'automatiser-relances-factures',
     title: 'Automatiser ses relances de factures : par où commencer ?',
     excerpt:
@@ -78,4 +116,5 @@ export const categoryColors: Record<string, string> = {
   'Automatisation': 'var(--color-cta)',
   'Intelligence artificielle': 'var(--color-accent)',
   'Conseil': 'var(--color-gold)',
+  'Site web': '#10B981',
 };
