@@ -111,6 +111,39 @@ const businessSchema = {
     <Footer />
 
     <script>
+      import Lenis from 'lenis';
+
+      /* ── Smooth scroll à inertie (Lenis) ───── */
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!prefersReduced) {
+        const lenis = new Lenis({
+          lerp: 0.09,          // amortissement : plus bas = plus « lourd »/glissant
+          wheelMultiplier: 1,
+          smoothWheel: true,   // molette (desktop) seulement ; le tactile reste natif
+        });
+        // Exposé pour le scroll programmatique (modale, ancres) et le lock de scroll.
+        (window as any).lenis = lenis;
+
+        function raf(time: number) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        /* ── Parallaxe douce sur les orbes du hero ── */
+        const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
+        if (parallaxEls.length) {
+          lenis.on('scroll', ({ scroll }: { scroll: number }) => {
+            for (const el of parallaxEls) {
+              const speed = parseFloat(el.dataset.parallax || '0.1');
+              // Propriété CSS `translate` indépendante : se compose avec l'animation `transform` (float).
+              el.style.translate = `0 ${(scroll * speed).toFixed(1)}px`;
+            }
+          });
+        }
+      }
+
       /* ── Scroll reveal (toutes variantes) ─── */
       function initReveal() {
         const observer = new IntersectionObserver(

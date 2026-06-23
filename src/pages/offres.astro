@@ -223,9 +223,9 @@ const serviceSchema = {
 
   <!-- ── HERO ───────────────────────────────────────────── -->
   <section class="relative pt-20 sm:pt-28 pb-16 overflow-hidden bg-[var(--color-background)]">
-    <div class="absolute -top-24 -left-24 w-80 h-80 rounded-full mesh-orb pointer-events-none"
+    <div class="absolute -top-24 -left-24 w-80 h-80 rounded-full mesh-orb pointer-events-none" data-parallax="0.14"
          style="background: radial-gradient(circle, rgba(67,56,202,0.18), transparent 70%);" aria-hidden="true"></div>
-    <div class="absolute top-10 -right-20 w-72 h-72 rounded-full mesh-orb-2 pointer-events-none"
+    <div class="absolute top-10 -right-20 w-72 h-72 rounded-full mesh-orb-2 pointer-events-none" data-parallax="-0.1"
          style="background: radial-gradient(circle, rgba(6,182,212,0.16), transparent 70%);" aria-hidden="true"></div>
 
     <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -548,14 +548,18 @@ const serviceSchema = {
           void (panel as HTMLElement).offsetWidth;
           panel.classList.add('is-active');
           if (hint) hint.style.display = 'none';
-          // scroll doux vers le panneau
+          // scroll doux vers le panneau (via Lenis si dispo, sinon natif)
           setTimeout(() => {
-            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const lenis = (window as any).lenis;
+            if (lenis) lenis.scrollTo(panel, { offset: -24 });
+            else panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 60);
         } else {
           if (hint) hint.style.display = '';
           // remonte vers le sélecteur
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const lenis = (window as any).lenis;
+          if (lenis) lenis.scrollTo(card, { offset: -120 });
+          else card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       });
     });

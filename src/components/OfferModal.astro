@@ -14,7 +14,7 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 <div id="offer-modal" class="offer-modal" hidden role="dialog" aria-modal="true" aria-labelledby="offer-modal-title">
   <div class="offer-backdrop" data-offer-close aria-hidden="true"></div>
 
-  <div class="offer-panel" role="document">
+  <div class="offer-panel" role="document" data-lenis-prevent>
     <button type="button" class="offer-close" data-offer-close aria-label="Fermer la fenêtre">
       <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -145,6 +145,7 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
     void modal.offsetWidth;
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    (window as any).lenis?.stop();
 
     setTimeout(() => document.getElementById('offer-prenom')?.focus(), 80);
   }
@@ -153,6 +154,7 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
     if (!modal) return;
     modal.classList.remove('is-open');
     document.body.style.overflow = '';
+    (window as any).lenis?.start();
     setTimeout(() => modal.setAttribute('hidden', ''), 250);
     lastFocused?.focus();
   }
