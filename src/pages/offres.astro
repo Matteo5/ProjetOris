@@ -312,7 +312,7 @@ const serviceSchema = {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {autoPlans.map((plan) => (
           <div class="formula-col flex">
-            <article class={`pricing-card group ${plan.featured ? 'pricing-card--featured' : ''}`}>
+            <article class={`pricing-card tilt-card group ${plan.featured ? 'pricing-card--featured' : ''}`}>
               {plan.badge && <span class="pricing-badge">{plan.badge}</span>}
               <div class={`pricing-icon ${plan.featured ? 'pricing-icon--featured' : ''}`}>
                 <Fragment set:html={plan.icon} />
@@ -366,7 +366,7 @@ const serviceSchema = {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {webPlans.map((plan) => (
           <div class="formula-col flex">
-            <article class={`pricing-card group ${plan.featured ? 'pricing-card--featured' : ''}`}>
+            <article class={`pricing-card tilt-card group ${plan.featured ? 'pricing-card--featured' : ''}`}>
               {plan.badge && <span class="pricing-badge">{plan.badge}</span>}
               <div class={`pricing-icon ${plan.featured ? 'pricing-icon--featured' : ''}`}>
                 <Fragment set:html={plan.icon} />
@@ -709,10 +709,10 @@ const serviceSchema = {
     border-radius: 1.25rem;
     padding: 2rem;
     box-shadow: var(--shadow-sm);
-    transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-smooth);
+    /* transform piloté par .tilt-card (global) ; on ne transitionne ici que ce qu'il faut */
+    transition: transform 0.2s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth);
   }
   .pricing-card:hover {
-    transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
   }
   .pricing-card--featured {
