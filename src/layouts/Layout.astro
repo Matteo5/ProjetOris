@@ -12,7 +12,7 @@ interface Props {
 
 const {
   title,
-  description = "Solutions d'automatisation et d'IA simples pour PME et indépendants en Normandie.",
+  description = "Solutions d'automatisation et d'IA simples pour PME et indépendants, partout en France.",
   ogImage = '/og-default.png',
 } = Astro.props;
 
@@ -28,10 +28,10 @@ const businessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: siteName,
-  description: "Solutions d'automatisation, d'IA et de création de sites web pour PME et indépendants en Normandie.",
+  description: "Solutions d'automatisation, d'IA et de création de sites web pour PME et indépendants, partout en France.",
   url: siteBase.origin,
   email: CONTACT_EMAIL,
-  areaServed: { '@type': 'State', name: 'Normandie' },
+  areaServed: { '@type': 'Country', name: 'France' },
   address: { '@type': 'PostalAddress', addressRegion: 'Normandie', addressCountry: 'FR' },
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
