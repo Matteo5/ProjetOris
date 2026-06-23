@@ -1,4 +1,5 @@
 ---
+import { CONTACT_EMAIL } from '../config';
 const year = new Date().getFullYear();
 ---
 
@@ -17,13 +18,13 @@ const year = new Date().getFullYear();
         </p>
         <!-- Email -->
         <a
-          href="mailto:contact@snodo-digital.fr"
+          href={`mailto:${CONTACT_EMAIL}`}
           class="mt-6 inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors duration-200 group"
         >
           <svg class="w-4 h-4 flex-shrink-0 text-[var(--color-accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
           </svg>
-          contact@snodo-digital.fr
+          {CONTACT_EMAIL}
         </a>
       </div>
 
@@ -52,8 +53,8 @@ const year = new Date().getFullYear();
           {[
             'Automatisation',
             'Intelligence artificielle',
+            'Création de site web',
             'Conseil & Formation',
-            'Intégration d\'outils',
           ].map(s => (
             <li class="text-sm text-slate-400">{s}</li>
           ))}

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { CONTACT_EMAIL } from '../config';
 
 /*
  * Politique de confidentialité (RGPD).
@@ -11,7 +12,7 @@ const blocks = [
     title: '1. Responsable du traitement',
     body: [
       'Les données collectées sur ce site sont traitées par Snodo, nom commercial de l\'entreprise individuelle [Prénom Nom], établie en Normandie, France.',
-      'Pour toute question relative à vos données : contact@snodo-digital.fr.',
+      `Pour toute question relative à vos données : ${CONTACT_EMAIL}.`,
     ],
   },
   {
@@ -49,7 +50,7 @@ const blocks = [
     title: '7. Vos droits',
     body: [
       'Conformément au RGPD, vous disposez d\'un droit d\'accès, de rectification, d\'effacement, de limitation, d\'opposition et de portabilité de vos données.',
-      'Pour exercer ces droits, écrivez-nous à contact@snodo-digital.fr. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr).',
+      `Pour exercer ces droits, écrivez-nous à ${CONTACT_EMAIL}. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr).`,
     ],
   },
 ];

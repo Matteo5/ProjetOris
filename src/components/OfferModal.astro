@@ -7,7 +7,7 @@
  * Déclencheurs : tout élément portant l'attribut `data-offer-trigger`
  * avec `data-offer-name` (nom de l'offre) et `data-offer-price` (récap prix).
  */
-import { FORMSPREE_ID } from '../config';
+import { FORMSPREE_ID, CONTACT_EMAIL } from '../config';
 const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 ---
 
@@ -60,7 +60,7 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
         </div>
 
         <div id="offer-global-error" class="offer-global-error hidden" role="alert">
-          Une erreur est survenue. Réessayez ou écrivez-nous à contact@snodo-digital.fr.
+          Une erreur est survenue. Réessayez ou écrivez-nous à {CONTACT_EMAIL}.
         </div>
 
         <button type="submit" id="offer-submit" class="offer-submit group">

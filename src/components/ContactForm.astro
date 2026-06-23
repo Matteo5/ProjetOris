@@ -1,5 +1,5 @@
 ---
-import { FORMSPREE_ID } from '../config';
+import { FORMSPREE_ID, CONTACT_EMAIL } from '../config';
 const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 
 // Champ avec icône intégrée (fond blanc, icône qui s'illumine au focus)
@@ -183,7 +183,7 @@ const labelClass =
 
     <!-- Error message global -->
     <div id="form-error" class="hidden rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700" role="alert">
-      Une erreur est survenue. Merci de réessayer ou de nous écrire directement à contact@snodo-digital.fr.
+      Une erreur est survenue. Merci de réessayer ou de nous écrire directement à {CONTACT_EMAIL}.
     </div>
 
     <div class="pt-1">
