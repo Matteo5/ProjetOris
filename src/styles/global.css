@@ -97,6 +97,66 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--shadow-xl);
 }
 
+/* ── Cartes 3D au survol (tilt + halo + relief) ───────── */
+.tilt-card {
+  position: relative;
+  /* --rx / --ry posés par JS au survol ; --ty pour le lift */
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--ty, 0px));
+  transform-style: preserve-3d;
+  transition: transform 0.2s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+  will-change: transform;
+}
+.tilt-card:hover {
+  --ty: -6px;
+  box-shadow: var(--shadow-xl);
+}
+
+/* Bordure dégradée lumineuse révélée au survol (le « halo ») */
+.tilt-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-cta), var(--color-accent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-smooth);
+  pointer-events: none;
+  z-index: 3;
+}
+.tilt-card:hover::before { opacity: 1; }
+
+/* Reflet doux qui suit le curseur */
+.tilt-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(99, 102, 241, 0.10), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-smooth);
+  pointer-events: none;
+  z-index: 2;
+}
+.tilt-card:hover::after { opacity: 1; }
+
+/* Élément en relief (l'icône ressort vers le curseur) */
+.tilt-icon {
+  transition: transform 0.3s var(--ease-spring);
+  transform: translateZ(20px);
+}
+.tilt-card:hover .tilt-icon { transform: translateZ(38px) scale(1.06); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card { transform: none !important; }
+  .tilt-card::before, .tilt-card::after { display: none; }
+  .tilt-icon { transform: none !important; }
+}
+
 /* ── Animated background orbs ─────────────────────────── */
 @keyframes mesh-float {
   0%, 100% { transform: translate(0, 0) scale(1); }

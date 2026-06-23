@@ -212,13 +212,41 @@ const businessSchema = {
         });
       }
 
+      /* ── Tilt 3D au survol des cartes ──────── */
+      function initTilt() {
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (prefersReduced || !finePointer) return;
+
+        document.querySelectorAll<HTMLElement>('.tilt-card').forEach(card => {
+          if (card.dataset.tiltBound) return;
+          card.dataset.tiltBound = '1';
+          const MAX = 7; // inclinaison max en degrés
+
+          card.addEventListener('pointermove', (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width;   // 0 → 1
+            const py = (e.clientY - r.top) / r.height;   // 0 → 1
+            card.style.setProperty('--ry', ((px - 0.5) * MAX * 2).toFixed(2) + 'deg');
+            card.style.setProperty('--rx', ((0.5 - py) * MAX * 2).toFixed(2) + 'deg');
+            card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+            card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+          });
+          card.addEventListener('pointerleave', () => {
+            card.style.setProperty('--rx', '0deg');
+            card.style.setProperty('--ry', '0deg');
+          });
+        });
+      }
+
       initReveal();
       initCounters();
       initCalendly();
+      initTilt();
       document.addEventListener('astro:page-load', () => {
         initReveal();
         initCounters();
         initCalendly();
+        initTilt();
       });
     </script>
 
