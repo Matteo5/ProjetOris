@@ -87,7 +87,7 @@ export const articles: Article[] = [
         <li>Renommer et classer le fichier dans le bon dossier</li>
       </ul>
       <h2>Toujours sous votre contrôle</h2>
-      <p>Chez Snodo, nous déployons des outils IA <em>supervisés</em> : vous gardez la main sur les cas ambigus et validez avant intégration dans votre comptabilité. L'IA accélère, elle ne décide pas à votre place.</p>
+      <p>Chez Loopa, nous déployons des outils IA <em>supervisés</em> : vous gardez la main sur les cas ambigus et validez avant intégration dans votre comptabilité. L'IA accélère, elle ne décide pas à votre place.</p>
       <p>En pratique, un expert-comptable peut diviser par dix le temps consacré au tri, et se concentrer sur le conseil à forte valeur ajoutée.</p>
     `,
   },

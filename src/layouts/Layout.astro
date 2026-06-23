@@ -20,7 +20,7 @@ const siteBase = Astro.site ?? new URL(SITE_URL);
 const canonicalURL = new URL(Astro.url.pathname, siteBase).href;
 // Les crawlers sociaux exigent une URL absolue pour l'image.
 const ogImageURL = new URL(ogImage, siteBase).href;
-const siteName = 'Snodo';
+const siteName = 'Loopa';
 const fullTitle = `${title} — ${siteName}`;
 
 // Schema.org LocalBusiness (centralisé pour éviter la duplication des infos).

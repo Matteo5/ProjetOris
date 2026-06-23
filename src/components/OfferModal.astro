@@ -33,7 +33,7 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
       </p>
 
       <form id="offer-form" action={formAction} method="POST" novalidate class="offer-fields">
-        <input type="hidden" name="_subject" id="offer-subject" value="Demande depuis le site Snodo" />
+        <input type="hidden" name="_subject" id="offer-subject" value="Demande depuis le site Loopa" />
         <input type="hidden" name="offre" id="offer-hidden-name" value="" />
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
 
@@ -127,7 +127,7 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 
     if (nameEl) nameEl.textContent = name;
     if (priceEl) priceEl.textContent = price;
-    if (subjectEl) subjectEl.value = `Demande « ${name} » depuis le site Snodo`;
+    if (subjectEl) subjectEl.value = `Demande « ${name} » depuis le site Loopa`;
     if (hiddenName) hiddenName.value = name;
 
     // remet le formulaire à zéro si on rouvre après un succès

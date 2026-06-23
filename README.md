@@ -1,6 +1,6 @@
-# Snodo — Site vitrine
+# Loopa — Site vitrine
 
-Site marketing B2B pour **Snodo**, spécialiste de l'automatisation et de l'IA
+Site marketing B2B pour **Loopa**, spécialiste de l'automatisation et de l'IA
 pour les PME, artisans et indépendants en Normandie.
 
 ## Stack

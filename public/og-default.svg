@@ -28,7 +28,7 @@
   <circle cx="180" cy="560" r="320" fill="url(#orb2)"/>
 
   <!-- Wordmark -->
-  <text x="90" y="150" font-family="'Sora','Segoe UI',sans-serif" font-size="46" font-weight="800" fill="#ffffff">Snodo<tspan fill="url(#accent)">.</tspan></text>
+  <text x="90" y="150" font-family="'Sora','Segoe UI',sans-serif" font-size="46" font-weight="800" fill="#ffffff">Loopa<tspan fill="url(#accent)">.</tspan></text>
 
   <!-- Titre -->
   <text x="90" y="320" font-family="'Sora','Segoe UI',sans-serif" font-size="74" font-weight="800" fill="#ffffff">Automatisez le répétitif,</text>
