@@ -158,6 +158,17 @@ const tabs = [
     border-color: var(--color-cta);
     box-shadow: var(--shadow-md);
   }
+
+  /* Transition du panneau au changement d'onglet */
+  @keyframes metier-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anim-in { animation: metier-in 0.4s var(--ease-smooth); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim-in { animation: none; }
+  }
 </style>
 
 <script>
@@ -171,9 +182,16 @@ const tabs = [
       /* Le style suit uniquement aria-selected (piloté par CSS) */
       tabBtns.forEach(t => t.setAttribute('aria-selected', String(t === btn)));
 
-      /* Affiche le bon panneau */
+      /* Affiche le bon panneau, avec animation d'entrée */
       panels.forEach(panel => {
-        panel.classList.toggle('hidden', panel.id !== `panel-${target}`);
+        const show = panel.id === `panel-${target}`;
+        panel.classList.toggle('hidden', !show);
+        if (show) {
+          // retire puis réapplique la classe pour relancer l'animation
+          panel.classList.remove('anim-in');
+          void (panel as HTMLElement).offsetWidth;
+          panel.classList.add('anim-in');
+        }
       });
     });
   });
